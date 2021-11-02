@@ -21,11 +21,11 @@ public class ProjectResponseDTO {
     @Schema(description = "Статус")
     private Status status;
     @Schema(description = "Создатель")
-    private EmployeeResponseDTO owner;
+    private EmployeeRequestDTO owner;
     @Schema(description = "Список задач")
-    private List<TaskResponseDTO> tasks;
+    private List<TaskRequestDTO> tasks;
     @Schema(description = "Список сотрудников")
-    private List<TaskResponseDTO> employees;
+    private List<TaskRequestDTO> employees;
 
     public Long getId() {
         return id;
@@ -75,27 +75,27 @@ public class ProjectResponseDTO {
         this.status = status;
     }
 
-    public EmployeeResponseDTO getOwner() {
+    public EmployeeRequestDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(EmployeeResponseDTO owner) {
+    public void setOwner(EmployeeRequestDTO owner) {
         this.owner = owner;
     }
 
-    public List<TaskResponseDTO> getTasks() {
+    public List<TaskRequestDTO> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskResponseDTO> tasks) {
+    public void setTasks(List<TaskRequestDTO> tasks) {
         this.tasks = tasks;
     }
 
-    public List<TaskResponseDTO> getEmployees() {
+    public List<TaskRequestDTO> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<TaskResponseDTO> employees) {
+    public void setEmployees(List<TaskRequestDTO> employees) {
         this.employees = employees;
     }
 }

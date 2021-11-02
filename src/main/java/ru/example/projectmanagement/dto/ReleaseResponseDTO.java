@@ -18,7 +18,7 @@ public class ReleaseResponseDTO {
     @Schema(description = "Дата завершения")
     private LocalDate endDate;
     @Schema(description = "Список задач")
-    private List<TaskResponseDTO> tasks;
+    private List<TaskRequestDTO> tasks;
 
     public Long getId() {
         return id;
@@ -60,11 +60,11 @@ public class ReleaseResponseDTO {
         this.endDate = endDate;
     }
 
-    public List<TaskResponseDTO> getTasks() {
+    public List<TaskRequestDTO> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskResponseDTO> tasks) {
+    public void setTasks(List<TaskRequestDTO> tasks) {
         this.tasks = tasks;
     }
 }

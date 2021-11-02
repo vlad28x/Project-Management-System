@@ -9,13 +9,13 @@ public class EmployeeResponseDTO {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Пользователь")
-    private UserResponseDTO user;
+    private TaskRequestDTO user;
     @Schema(description = "Проект")
-    private ProjectResponseDTO project;
+    private TaskRequestDTO project;
     @Schema(description = "Список выполняемых сотрудником задач")
-    private List<TaskResponseDTO> assignedTasks;
+    private List<TaskRequestDTO> assignedTasks;
     @Schema(description = "Список созданных сотрудником задач")
-    private List<TaskResponseDTO> ownerTasks;
+    private List<TaskRequestDTO> ownerTasks;
 
     public Long getId() {
         return id;
@@ -25,35 +25,35 @@ public class EmployeeResponseDTO {
         this.id = id;
     }
 
-    public UserResponseDTO getUser() {
+    public TaskRequestDTO getUser() {
         return user;
     }
 
-    public void setUser(UserResponseDTO user) {
+    public void setUser(TaskRequestDTO user) {
         this.user = user;
     }
 
-    public ProjectResponseDTO getProject() {
+    public TaskRequestDTO getProject() {
         return project;
     }
 
-    public void setProject(ProjectResponseDTO project) {
+    public void setProject(TaskRequestDTO project) {
         this.project = project;
     }
 
-    public List<TaskResponseDTO> getAssignedTasks() {
+    public List<TaskRequestDTO> getAssignedTasks() {
         return assignedTasks;
     }
 
-    public void setAssignedTasks(List<TaskResponseDTO> assignedTasks) {
+    public void setAssignedTasks(List<TaskRequestDTO> assignedTasks) {
         this.assignedTasks = assignedTasks;
     }
 
-    public List<TaskResponseDTO> getOwnerTasks() {
+    public List<TaskRequestDTO> getOwnerTasks() {
         return ownerTasks;
     }
 
-    public void setOwnerTasks(List<TaskResponseDTO> ownerTasks) {
+    public void setOwnerTasks(List<TaskRequestDTO> ownerTasks) {
         this.ownerTasks = ownerTasks;
     }
 }

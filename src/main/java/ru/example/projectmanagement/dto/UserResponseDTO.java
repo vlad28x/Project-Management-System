@@ -17,7 +17,7 @@ public class UserResponseDTO {
     @Schema(description = "E-mail")
     private String email;
     @Schema(description = "Список сотрудников")
-    private List<EmployeeResponseDTO> employees;
+    private List<EmployeeRequestDTO> employees;
 
     public Long getId() {
         return id;
@@ -59,11 +59,11 @@ public class UserResponseDTO {
         this.email = email;
     }
 
-    public List<EmployeeResponseDTO> getEmployees() {
+    public List<EmployeeRequestDTO> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<EmployeeResponseDTO> employees) {
+    public void setEmployees(List<EmployeeRequestDTO> employees) {
         this.employees = employees;
     }
 }
