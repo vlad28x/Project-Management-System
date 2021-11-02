@@ -1,19 +1,30 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectmanagement.entities.enums.Status;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Schema(description = "Сущность проекта для ответа")
 public class ProjectResponseDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Имя")
     private String name;
+    @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Дата начала проекта")
     private LocalDate startDate;
+    @Schema(description = "Дата завершения проекта")
     private LocalDate endDate;
+    @Schema(description = "Статус")
     private Status status;
+    @Schema(description = "Создатель")
     private EmployeeResponseDTO owner;
+    @Schema(description = "Список задач")
     private List<TaskResponseDTO> tasks;
+    @Schema(description = "Список сотрудников")
     private List<TaskResponseDTO> employees;
 
     public Long getId() {

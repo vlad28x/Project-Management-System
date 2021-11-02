@@ -1,21 +1,34 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectmanagement.entities.enums.Status;
 import ru.example.projectmanagement.entities.enums.Type;
 
 import java.time.LocalDate;
 
+@Schema(description = "Сущность задачи для запроса")
 public class TaskRequestDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Имя")
     private String name;
+    @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Статус")
     private Status status;
+    @Schema(description = "Тип")
     private Type type;
+    @Schema(description = "Дата начала задачи")
     private LocalDate startDate;
+    @Schema(description = "Дата завершения задачи")
     private LocalDate endDate;
+    @Schema(description = "Релиз")
     private ReleaseRequestDTO release;
+    @Schema(description = "Создатель")
     private EmployeeRequestDTO owner;
-    private EmployeeRequestDTO assigner;
+    @Schema(description = "Назначенный")
+    private EmployeeRequestDTO assignee;
+    @Schema(description = "Назначенный")
     private ProjectRequestDTO project;
 
     public Long getId() {
@@ -90,12 +103,12 @@ public class TaskRequestDTO {
         this.owner = owner;
     }
 
-    public EmployeeRequestDTO getAssigner() {
-        return assigner;
+    public EmployeeRequestDTO getAssignee() {
+        return assignee;
     }
 
-    public void setAssigner(EmployeeRequestDTO assigner) {
-        this.assigner = assigner;
+    public void setAssignee(EmployeeRequestDTO assignee) {
+        this.assignee = assignee;
     }
 
     public ProjectRequestDTO getProject() {

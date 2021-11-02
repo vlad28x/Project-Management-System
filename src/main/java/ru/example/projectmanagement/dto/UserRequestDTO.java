@@ -1,10 +1,18 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Сущность пользователя для запроса")
 public class UserRequestDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Никнейм")
     private String username;
+    @Schema(description = "Имя")
     private String firstName;
+    @Schema(description = "Фамилия")
     private String secondName;
+    @Schema(description = "E-mail")
     private String email;
 
     public Long getId() {

@@ -1,8 +1,14 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Сущность сотрудника для запроса")
 public class EmployeeRequestDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Пользователь")
     private UserRequestDTO user;
+    @Schema(description = "Проект")
     private ProjectRequestDTO project;
 
     public Long getId() {

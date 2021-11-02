@@ -1,12 +1,20 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDate;
 
+@Schema(description = "Сущность релиза для запроса")
 public class ReleaseRequestDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Версия")
     private String version;
+    @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Дата начала")
     private LocalDate startDate;
+    @Schema(description = "Дата завершения")
     private LocalDate endDate;
 
     public Long getId() {

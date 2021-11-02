@@ -1,21 +1,34 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectmanagement.entities.enums.Status;
 import ru.example.projectmanagement.entities.enums.Type;
 
 import java.time.LocalDate;
 
+@Schema(description = "Сущность задачи для ответа")
 public class TaskResponseDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Имя")
     private String name;
+    @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Статус")
     private Status status;
+    @Schema(description = "Тип")
     private Type type;
+    @Schema(description = "Дата начала задачи")
     private LocalDate startDate;
+    @Schema(description = "Дата завершения задачи")
     private LocalDate endDate;
-    private ReleaseResponseDTO releaseResponseDTO;
+    @Schema(description = "Релиз")
+    private ReleaseResponseDTO release;
+    @Schema(description = "Создатель")
     private EmployeeResponseDTO owner;
-    private EmployeeResponseDTO assigner;
+    @Schema(description = "Назначенный")
+    private EmployeeResponseDTO assignee;
+    @Schema(description = "Назначенный")
     private ProjectResponseDTO project;
 
     public Long getId() {
@@ -74,12 +87,12 @@ public class TaskResponseDTO {
         this.endDate = endDate;
     }
 
-    public ReleaseResponseDTO getReleaseResponseDTO() {
-        return releaseResponseDTO;
+    public ReleaseResponseDTO getRelease() {
+        return release;
     }
 
-    public void setReleaseResponseDTO(ReleaseResponseDTO releaseResponseDTO) {
-        this.releaseResponseDTO = releaseResponseDTO;
+    public void setRelease(ReleaseResponseDTO release) {
+        this.release = release;
     }
 
     public EmployeeResponseDTO getOwner() {
@@ -90,12 +103,12 @@ public class TaskResponseDTO {
         this.owner = owner;
     }
 
-    public EmployeeResponseDTO getAssigner() {
-        return assigner;
+    public EmployeeResponseDTO getAssignee() {
+        return assignee;
     }
 
-    public void setAssigner(EmployeeResponseDTO assigner) {
-        this.assigner = assigner;
+    public void setAssignee(EmployeeResponseDTO assignee) {
+        this.assignee = assignee;
     }
 
     public ProjectResponseDTO getProject() {

@@ -1,13 +1,22 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
 
+@Schema(description = "Сущность пользователя для ответа")
 public class UserResponseDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Никнейм")
     private String username;
+    @Schema(description = "Имя")
     private String firstName;
+    @Schema(description = "Фамилия")
     private String secondName;
+    @Schema(description = "E-mail")
     private String email;
+    @Schema(description = "Список сотрудников")
     private List<EmployeeResponseDTO> employees;
 
     public Long getId() {

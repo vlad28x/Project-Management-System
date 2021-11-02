@@ -1,16 +1,25 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectmanagement.entities.enums.Status;
 
 import java.time.LocalDate;
 
+@Schema(description = "Сущность проекта для запроса")
 public class ProjectRequestDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Имя")
     private String name;
+    @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Дата начала проекта")
     private LocalDate startDate;
+    @Schema(description = "Дата завершения проекта")
     private LocalDate endDate;
+    @Schema(description = "Статус")
     private Status status;
+    @Schema(description = "Создатель")
     private EmployeeRequestDTO owner;
 
     public Long getId() {

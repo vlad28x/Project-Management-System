@@ -1,14 +1,23 @@
 package ru.example.projectmanagement.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Schema(description = "Сущность релиза для ответа")
 public class ReleaseResponseDTO {
+    @Schema(description = "Идентификатор")
     private Long id;
+    @Schema(description = "Версия")
     private String version;
+    @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Дата начала")
     private LocalDate startDate;
+    @Schema(description = "Дата завершения")
     private LocalDate endDate;
+    @Schema(description = "Список задач")
     private List<TaskResponseDTO> tasks;
 
     public Long getId() {
