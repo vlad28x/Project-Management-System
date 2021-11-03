@@ -24,11 +24,11 @@ public class TaskResponseDTO {
     private LocalDate endDate;
     @Schema(description = "Релиз")
     private ReleaseRequestDTO release;
-    @Schema(description = "Создатель")
-    private EmployeeRequestDTO owner;
-    @Schema(description = "Назначенный")
-    private EmployeeResponseDTO assignee;
-    @Schema(description = "Назначенный")
+    @Schema(description = "Создатель задачи")
+    private MemberRequestDTO owner;
+    @Schema(description = "Назначенный на выполнение задачи")
+    private MemberResponseDTO assignee;
+    @Schema(description = "Проект")
     private ProjectRequestDTO project;
 
     public Long getId() {
@@ -95,19 +95,19 @@ public class TaskResponseDTO {
         this.release = release;
     }
 
-    public EmployeeRequestDTO getOwner() {
+    public MemberRequestDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(EmployeeRequestDTO owner) {
+    public void setOwner(MemberRequestDTO owner) {
         this.owner = owner;
     }
 
-    public EmployeeResponseDTO getAssignee() {
+    public MemberResponseDTO getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(EmployeeResponseDTO assignee) {
+    public void setAssignee(MemberResponseDTO assignee) {
         this.assignee = assignee;
     }
 

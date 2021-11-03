@@ -19,8 +19,8 @@ public class ProjectRequestDTO {
     private LocalDate endDate;
     @Schema(description = "Статус")
     private Status status;
-    @Schema(description = "Создатель")
-    private EmployeeRequestDTO owner;
+    @Schema(description = "Создатель проекта")
+    private MemberRequestDTO owner;
 
     public Long getId() {
         return id;
@@ -70,11 +70,11 @@ public class ProjectRequestDTO {
         this.status = status;
     }
 
-    public EmployeeRequestDTO getOwner() {
+    public MemberRequestDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(EmployeeRequestDTO owner) {
+    public void setOwner(MemberRequestDTO owner) {
         this.owner = owner;
     }
 }

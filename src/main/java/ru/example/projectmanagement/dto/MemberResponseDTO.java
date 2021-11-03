@@ -4,17 +4,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
-@Schema(description = "Сущность сотрудника для ответа")
-public class EmployeeResponseDTO {
+@Schema(description = "Сущность участника проекта для ответа")
+public class MemberResponseDTO {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Пользователь")
     private TaskRequestDTO user;
     @Schema(description = "Проект")
     private TaskRequestDTO project;
-    @Schema(description = "Список выполняемых сотрудником задач")
+    @Schema(description = "Список выполняемых участником задач")
     private List<TaskRequestDTO> assignedTasks;
-    @Schema(description = "Список созданных сотрудником задач")
+    @Schema(description = "Список созданных участником задач")
     private List<TaskRequestDTO> ownerTasks;
 
     public Long getId() {
