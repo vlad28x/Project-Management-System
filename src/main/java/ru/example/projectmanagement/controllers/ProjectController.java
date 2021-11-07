@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.example.projectmanagement.dto.ProjectRequestDTO;
-import ru.example.projectmanagement.dto.ProjectResponseDTO;
+import ru.example.projectmanagement.dto.ProjectRequestDto;
+import ru.example.projectmanagement.dto.ProjectResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,29 +17,29 @@ public class ProjectController {
 
     @Operation(summary = "Получение всех проектов", description = "Позволяет получить все проекты")
     @GetMapping
-    public List<ProjectResponseDTO> getAllProjects() {
-        List<ProjectResponseDTO> list = new ArrayList<>();
-        list.add(new ProjectResponseDTO());
+    public List<ProjectResponseDto> getAllProjects() {
+        List<ProjectResponseDto> list = new ArrayList<>();
+        list.add(new ProjectResponseDto());
         return list;
     }
 
     @Operation(summary = "Получение одного проекта", description = "Позволяет получить один проект по заданному ID")
     @GetMapping("/{id}")
-    public ProjectResponseDTO getProjectById(@PathVariable Long id) {
-        return new ProjectResponseDTO();
+    public ProjectResponseDto getProjectById(@PathVariable Long id) {
+        return new ProjectResponseDto();
     }
 
     @Operation(summary = "Добавление проекта", description = "Позволяет добавить проект")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjectResponseDTO createProject(@RequestBody ProjectRequestDTO newProject) {
-        return new ProjectResponseDTO();
+    public ProjectResponseDto createProject(@RequestBody ProjectRequestDto newProject) {
+        return new ProjectResponseDto();
     }
 
     @Operation(summary = "Обновление проекта", description = "Позволяет обновить проект по заданному ID")
     @PutMapping("/{id}")
-    public ProjectResponseDTO updateProject(@PathVariable Long id, @RequestBody ProjectRequestDTO newProject) {
-        return new ProjectResponseDTO();
+    public ProjectResponseDto updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto newProject) {
+        return new ProjectResponseDto();
     }
 
     @Operation(summary = "Удаление проекта", description = "Позволяет удалить проект по заданному ID")

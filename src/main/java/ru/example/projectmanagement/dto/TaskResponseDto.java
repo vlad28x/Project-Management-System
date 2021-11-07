@@ -6,8 +6,8 @@ import ru.example.projectmanagement.entities.enums.Type;
 
 import java.time.LocalDate;
 
-@Schema(description = "Сущность задачи для запроса")
-public class TaskRequestDTO {
+@Schema(description = "Сущность задачи для ответа")
+public class TaskResponseDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Имя")
@@ -23,13 +23,13 @@ public class TaskRequestDTO {
     @Schema(description = "Дата завершения задачи")
     private LocalDate endDate;
     @Schema(description = "Релиз")
-    private ReleaseRequestDTO release;
+    private ReleaseRequestDto release;
     @Schema(description = "Создатель задачи")
-    private MemberRequestDTO owner;
+    private MemberRequestDto owner;
     @Schema(description = "Назначенный на выполнение задачи")
-    private MemberRequestDTO assignee;
+    private MemberResponseDto assignee;
     @Schema(description = "Проект")
-    private ProjectRequestDTO project;
+    private ProjectRequestDto project;
 
     public Long getId() {
         return id;
@@ -87,35 +87,35 @@ public class TaskRequestDTO {
         this.endDate = endDate;
     }
 
-    public ReleaseRequestDTO getRelease() {
+    public ReleaseRequestDto getRelease() {
         return release;
     }
 
-    public void setRelease(ReleaseRequestDTO release) {
+    public void setRelease(ReleaseRequestDto release) {
         this.release = release;
     }
 
-    public MemberRequestDTO getOwner() {
+    public MemberRequestDto getOwner() {
         return owner;
     }
 
-    public void setOwner(MemberRequestDTO owner) {
+    public void setOwner(MemberRequestDto owner) {
         this.owner = owner;
     }
 
-    public MemberRequestDTO getAssignee() {
+    public MemberResponseDto getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(MemberRequestDTO assignee) {
+    public void setAssignee(MemberResponseDto assignee) {
         this.assignee = assignee;
     }
 
-    public ProjectRequestDTO getProject() {
+    public ProjectRequestDto getProject() {
         return project;
     }
 
-    public void setProject(ProjectRequestDTO project) {
+    public void setProject(ProjectRequestDto project) {
         this.project = project;
     }
 }

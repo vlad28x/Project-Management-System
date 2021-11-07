@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.example.projectmanagement.dto.UserRequestDTO;
-import ru.example.projectmanagement.dto.UserResponseDTO;
+import ru.example.projectmanagement.dto.UserRequestDto;
+import ru.example.projectmanagement.dto.UserResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,30 +17,30 @@ public class UserController {
 
     @Operation(summary = "Получение всех пользователей", description = "Позволяет получить всех пользователей")
     @GetMapping
-    public List<UserResponseDTO> getAllUsers() {
-        List<UserResponseDTO> list = new ArrayList<>();
-        list.add(new UserResponseDTO());
+    public List<UserResponseDto> getAllUsers() {
+        List<UserResponseDto> list = new ArrayList<>();
+        list.add(new UserResponseDto());
         return list;
     }
 
     @Operation(summary = "Получение одного пользователя",
             description = "Позволяет получить одного пользователя по заданному ID")
     @GetMapping("/{id}")
-    public UserResponseDTO getUserById(@PathVariable Long id) {
-        return new UserResponseDTO();
+    public UserResponseDto getUserById(@PathVariable Long id) {
+        return new UserResponseDto();
     }
 
     @Operation(summary = "Добавление пользователя", description = "Позволяет добавить пользователя")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDTO createUser(@RequestBody UserRequestDTO newUser) {
-        return new UserResponseDTO();
+    public UserResponseDto createUser(@RequestBody UserRequestDto newUser) {
+        return new UserResponseDto();
     }
 
     @Operation(summary = "Обновление пользователя", description = "Позволяет обновить пользователя по заданному ID")
     @PutMapping("/{id}")
-    public UserResponseDTO updateUser(@PathVariable Long id, @RequestBody UserRequestDTO newUser) {
-        return new UserResponseDTO();
+    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto newUser) {
+        return new UserResponseDto();
     }
 
     @Operation(summary = "Удаление пользователя", description = "Позволяет удалить пользователя по заданному ID")

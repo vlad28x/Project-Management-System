@@ -5,17 +5,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(description = "Сущность участника проекта для ответа")
-public class MemberResponseDTO {
+public class MemberResponseDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Пользователь")
-    private TaskRequestDTO user;
+    private TaskRequestDto user;
     @Schema(description = "Проект")
-    private TaskRequestDTO project;
+    private TaskRequestDto project;
     @Schema(description = "Список выполняемых участником задач")
-    private List<TaskRequestDTO> assignedTasks;
+    private List<TaskRequestDto> assignedTasks;
     @Schema(description = "Список созданных участником задач")
-    private List<TaskRequestDTO> ownerTasks;
+    private List<TaskRequestDto> ownerTasks;
 
     public Long getId() {
         return id;
@@ -25,35 +25,35 @@ public class MemberResponseDTO {
         this.id = id;
     }
 
-    public TaskRequestDTO getUser() {
+    public TaskRequestDto getUser() {
         return user;
     }
 
-    public void setUser(TaskRequestDTO user) {
+    public void setUser(TaskRequestDto user) {
         this.user = user;
     }
 
-    public TaskRequestDTO getProject() {
+    public TaskRequestDto getProject() {
         return project;
     }
 
-    public void setProject(TaskRequestDTO project) {
+    public void setProject(TaskRequestDto project) {
         this.project = project;
     }
 
-    public List<TaskRequestDTO> getAssignedTasks() {
+    public List<TaskRequestDto> getAssignedTasks() {
         return assignedTasks;
     }
 
-    public void setAssignedTasks(List<TaskRequestDTO> assignedTasks) {
+    public void setAssignedTasks(List<TaskRequestDto> assignedTasks) {
         this.assignedTasks = assignedTasks;
     }
 
-    public List<TaskRequestDTO> getOwnerTasks() {
+    public List<TaskRequestDto> getOwnerTasks() {
         return ownerTasks;
     }
 
-    public void setOwnerTasks(List<TaskRequestDTO> ownerTasks) {
+    public void setOwnerTasks(List<TaskRequestDto> ownerTasks) {
         this.ownerTasks = ownerTasks;
     }
 }

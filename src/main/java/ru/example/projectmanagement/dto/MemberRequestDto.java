@@ -3,13 +3,13 @@ package ru.example.projectmanagement.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Сущность участника проекта для запроса")
-public class MemberRequestDTO {
+public class MemberRequestDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Пользователь")
-    private UserRequestDTO user;
+    private UserRequestDto user;
     @Schema(description = "Проект")
-    private ProjectRequestDTO project;
+    private ProjectRequestDto project;
 
     public Long getId() {
         return id;
@@ -19,19 +19,19 @@ public class MemberRequestDTO {
         this.id = id;
     }
 
-    public UserRequestDTO getUser() {
+    public UserRequestDto getUser() {
         return user;
     }
 
-    public void setUser(UserRequestDTO user) {
+    public void setUser(UserRequestDto user) {
         this.user = user;
     }
 
-    public ProjectRequestDTO getProject() {
+    public ProjectRequestDto getProject() {
         return project;
     }
 
-    public void setProject(ProjectRequestDTO project) {
+    public void setProject(ProjectRequestDto project) {
         this.project = project;
     }
 }

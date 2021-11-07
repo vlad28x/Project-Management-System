@@ -2,8 +2,10 @@ package ru.example.projectmanagement.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Сущность пользователя для запроса")
-public class UserRequestDTO {
+import java.util.List;
+
+@Schema(description = "Сущность пользователя для ответа")
+public class UserResponseDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Никнейм")
@@ -14,6 +16,8 @@ public class UserRequestDTO {
     private String secondName;
     @Schema(description = "E-mail")
     private String email;
+    @Schema(description = "Список участников")
+    private List<MemberRequestDto> employees;
 
     public Long getId() {
         return id;
@@ -53,5 +57,13 @@ public class UserRequestDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<MemberRequestDto> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<MemberRequestDto> employees) {
+        this.employees = employees;
     }
 }

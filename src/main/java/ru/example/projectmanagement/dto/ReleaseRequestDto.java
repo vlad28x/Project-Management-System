@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
 @Schema(description = "Сущность релиза для запроса")
-public class ReleaseRequestDTO {
+public class ReleaseRequestDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Версия")

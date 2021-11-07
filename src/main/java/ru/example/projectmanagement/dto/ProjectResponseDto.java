@@ -4,9 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectmanagement.entities.enums.Status;
 
 import java.time.LocalDate;
+import java.util.List;
 
-@Schema(description = "Сущность проекта для запроса")
-public class ProjectRequestDTO {
+@Schema(description = "Сущность проекта для ответа")
+public class ProjectResponseDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Имя")
@@ -20,7 +21,11 @@ public class ProjectRequestDTO {
     @Schema(description = "Статус")
     private Status status;
     @Schema(description = "Создатель проекта")
-    private MemberRequestDTO owner;
+    private MemberRequestDto owner;
+    @Schema(description = "Список задач")
+    private List<TaskRequestDto> tasks;
+    @Schema(description = "Список участников проекта")
+    private List<TaskRequestDto> employees;
 
     public Long getId() {
         return id;
@@ -70,11 +75,27 @@ public class ProjectRequestDTO {
         this.status = status;
     }
 
-    public MemberRequestDTO getOwner() {
+    public MemberRequestDto getOwner() {
         return owner;
     }
 
-    public void setOwner(MemberRequestDTO owner) {
+    public void setOwner(MemberRequestDto owner) {
         this.owner = owner;
+    }
+
+    public List<TaskRequestDto> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskRequestDto> tasks) {
+        this.tasks = tasks;
+    }
+
+    public List<TaskRequestDto> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<TaskRequestDto> employees) {
+        this.employees = employees;
     }
 }

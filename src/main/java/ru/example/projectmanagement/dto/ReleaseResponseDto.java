@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Schema(description = "Сущность релиза для ответа")
-public class ReleaseResponseDTO {
+public class ReleaseResponseDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Версия")
@@ -18,7 +18,7 @@ public class ReleaseResponseDTO {
     @Schema(description = "Дата завершения")
     private LocalDate endDate;
     @Schema(description = "Список задач")
-    private List<TaskRequestDTO> tasks;
+    private List<TaskRequestDto> tasks;
 
     public Long getId() {
         return id;
@@ -60,11 +60,11 @@ public class ReleaseResponseDTO {
         this.endDate = endDate;
     }
 
-    public List<TaskRequestDTO> getTasks() {
+    public List<TaskRequestDto> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskRequestDTO> tasks) {
+    public void setTasks(List<TaskRequestDto> tasks) {
         this.tasks = tasks;
     }
 }
