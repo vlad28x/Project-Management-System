@@ -4,6 +4,7 @@ package ru.example.projectmanagement.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectmanagement.dto.ReleaseRequestDto;
 import ru.example.projectmanagement.dto.ReleaseResponseDto;
@@ -18,29 +19,28 @@ public class ReleaseController {
 
     @Operation(summary = "Получение всех релизов", description = "Позволяет получить все релизы")
     @GetMapping
-    public List<ReleaseResponseDto> getAllReleases() {
+    public ResponseEntity<List<ReleaseResponseDto>> getAllReleases() {
         List<ReleaseResponseDto> list = new ArrayList<>();
         list.add(new ReleaseResponseDto());
-        return list;
+        return ResponseEntity.ok(list);
     }
 
     @Operation(summary = "Получение одного релиза", description = "Позволяет получить один релиз по заданному ID")
     @GetMapping("/{id}")
-    public ReleaseResponseDto getReleaseById(@PathVariable Long id) {
-        return new ReleaseResponseDto();
+    public ResponseEntity<ReleaseResponseDto> getReleaseById(@PathVariable Long id) {
+        return ResponseEntity.ok(new ReleaseResponseDto());
     }
 
     @Operation(summary = "Добавление релиза", description = "Позволяет добавить релиз")
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ReleaseResponseDto createRelease(@RequestBody ReleaseRequestDto newRelease) {
-        return new ReleaseResponseDto();
+    public ResponseEntity<ReleaseResponseDto> createRelease(@RequestBody ReleaseRequestDto newRelease) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ReleaseResponseDto());
     }
 
     @Operation(summary = "Обновление релиза", description = "Позволяет обновить релиз по заданному ID")
     @PutMapping("/{id}")
-    public ReleaseResponseDto updateRelease(@PathVariable Long id, @RequestBody ReleaseRequestDto newRelease) {
-        return new ReleaseResponseDto();
+    public ResponseEntity<ReleaseResponseDto> updateRelease(@PathVariable Long id, @RequestBody ReleaseRequestDto newRelease) {
+        return ResponseEntity.ok(new ReleaseResponseDto());
     }
 
     @Operation(summary = "Удаление релиза", description = "Позволяет удалить релиз по заданному ID")
