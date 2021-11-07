@@ -1,15 +1,18 @@
 package ru.example.projectmanagement.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import ru.example.projectmanagement.entities.enums.Role;
 
 @Schema(description = "Сущность участника проекта для запроса")
 public class MemberRequestDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Пользователь")
-    private UserRequestDto user;
+    private Long userId;
     @Schema(description = "Проект")
-    private ProjectRequestDto project;
+    private Long projectId;
+    @Schema(description = "Роль")
+    private Role role;
 
     public Long getId() {
         return id;
@@ -19,19 +22,27 @@ public class MemberRequestDto {
         this.id = id;
     }
 
-    public UserRequestDto getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserRequestDto user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public ProjectRequestDto getProject() {
-        return project;
+    public Long getProjectId() {
+        return projectId;
     }
 
-    public void setProject(ProjectRequestDto project) {
-        this.project = project;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

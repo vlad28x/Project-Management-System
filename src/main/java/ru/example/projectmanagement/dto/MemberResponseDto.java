@@ -1,21 +1,18 @@
 package ru.example.projectmanagement.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.util.List;
+import ru.example.projectmanagement.entities.enums.Role;
 
 @Schema(description = "Сущность участника проекта для ответа")
 public class MemberResponseDto {
     @Schema(description = "Идентификатор")
     private Long id;
     @Schema(description = "Пользователь")
-    private TaskRequestDto user;
+    private Long userId;
     @Schema(description = "Проект")
-    private TaskRequestDto project;
-    @Schema(description = "Список выполняемых участником задач")
-    private List<TaskRequestDto> assignedTasks;
-    @Schema(description = "Список созданных участником задач")
-    private List<TaskRequestDto> ownerTasks;
+    private Long projectId;
+    @Schema(description = "Роль")
+    private Role role;
 
     public Long getId() {
         return id;
@@ -25,35 +22,27 @@ public class MemberResponseDto {
         this.id = id;
     }
 
-    public TaskRequestDto getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(TaskRequestDto user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public TaskRequestDto getProject() {
-        return project;
+    public Long getProjectId() {
+        return projectId;
     }
 
-    public void setProject(TaskRequestDto project) {
-        this.project = project;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
-    public List<TaskRequestDto> getAssignedTasks() {
-        return assignedTasks;
+    public Role getRole() {
+        return role;
     }
 
-    public void setAssignedTasks(List<TaskRequestDto> assignedTasks) {
-        this.assignedTasks = assignedTasks;
-    }
-
-    public List<TaskRequestDto> getOwnerTasks() {
-        return ownerTasks;
-    }
-
-    public void setOwnerTasks(List<TaskRequestDto> ownerTasks) {
-        this.ownerTasks = ownerTasks;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

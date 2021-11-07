@@ -3,7 +3,6 @@ package ru.example.projectmanagement.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Schema(description = "Сущность релиза для ответа")
 public class ReleaseResponseDto {
@@ -17,8 +16,6 @@ public class ReleaseResponseDto {
     private LocalDate startDate;
     @Schema(description = "Дата завершения")
     private LocalDate endDate;
-    @Schema(description = "Список задач")
-    private List<TaskRequestDto> tasks;
 
     public Long getId() {
         return id;
@@ -60,11 +57,4 @@ public class ReleaseResponseDto {
         this.endDate = endDate;
     }
 
-    public List<TaskRequestDto> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<TaskRequestDto> tasks) {
-        this.tasks = tasks;
-    }
 }

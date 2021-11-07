@@ -23,13 +23,13 @@ public class TaskRequestDto {
     @Schema(description = "Дата завершения задачи")
     private LocalDate endDate;
     @Schema(description = "Релиз")
-    private ReleaseRequestDto release;
+    private Long releaseId;
     @Schema(description = "Создатель задачи")
-    private MemberRequestDto owner;
+    private Long ownerId;
     @Schema(description = "Назначенный на выполнение задачи")
-    private MemberRequestDto assignee;
+    private Long assigneeId;
     @Schema(description = "Проект")
-    private ProjectRequestDto project;
+    private Long projectId;
 
     public Long getId() {
         return id;
@@ -87,35 +87,35 @@ public class TaskRequestDto {
         this.endDate = endDate;
     }
 
-    public ReleaseRequestDto getRelease() {
-        return release;
+    public Long getReleaseId() {
+        return releaseId;
     }
 
-    public void setRelease(ReleaseRequestDto release) {
-        this.release = release;
+    public void setReleaseId(Long releaseId) {
+        this.releaseId = releaseId;
     }
 
-    public MemberRequestDto getOwner() {
-        return owner;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(MemberRequestDto owner) {
-        this.owner = owner;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public MemberRequestDto getAssignee() {
-        return assignee;
+    public Long getAssigneeId() {
+        return assigneeId;
     }
 
-    public void setAssignee(MemberRequestDto assignee) {
-        this.assignee = assignee;
+    public void setAssigneeId(Long assigneeId) {
+        this.assigneeId = assigneeId;
     }
 
-    public ProjectRequestDto getProject() {
-        return project;
+    public Long getProjectId() {
+        return projectId;
     }
 
-    public void setProject(ProjectRequestDto project) {
-        this.project = project;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }

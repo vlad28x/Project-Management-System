@@ -20,7 +20,7 @@ public class ProjectRequestDto {
     @Schema(description = "Статус")
     private Status status;
     @Schema(description = "Создатель проекта")
-    private MemberRequestDto owner;
+    private Long ownerId;
 
     public Long getId() {
         return id;
@@ -70,11 +70,11 @@ public class ProjectRequestDto {
         this.status = status;
     }
 
-    public MemberRequestDto getOwner() {
-        return owner;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(MemberRequestDto owner) {
-        this.owner = owner;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }
