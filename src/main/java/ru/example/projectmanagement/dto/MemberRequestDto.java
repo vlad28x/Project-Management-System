@@ -11,8 +11,6 @@ public class MemberRequestDto {
     private Long userId;
     @Schema(description = "Проект")
     private Long projectId;
-    @Schema(description = "Роль")
-    private Role role;
 
     public Long getId() {
         return id;
