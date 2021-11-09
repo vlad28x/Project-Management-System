@@ -1,6 +1,7 @@
 package ru.example.projectmanagement.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import ru.example.projectmanagement.entities.enums.Role;
 
 @Schema(description = "Сущность пользователя для запроса")
 public class UserRequestDto {
@@ -14,6 +15,8 @@ public class UserRequestDto {
     private String secondName;
     @Schema(description = "E-mail")
     private String email;
+    @Schema(description = "Роль")
+    private Role role;
 
     public Long getId() {
         return id;
@@ -53,5 +56,13 @@ public class UserRequestDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

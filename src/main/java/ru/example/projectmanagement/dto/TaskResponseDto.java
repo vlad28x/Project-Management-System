@@ -25,9 +25,9 @@ public class TaskResponseDto {
     @Schema(description = "Релиз")
     private ReleaseResponseDto release;
     @Schema(description = "Создатель задачи")
-    private MemberResponseDto owner;
+    private UserResponseDto owner;
     @Schema(description = "Назначенный на выполнение задачи")
-    private MemberResponseDto assignee;
+    private UserResponseDto assignee;
     @Schema(description = "Проект")
     private ProjectResponseDto project;
 
@@ -95,19 +95,19 @@ public class TaskResponseDto {
         this.release = release;
     }
 
-    public MemberResponseDto getOwner() {
+    public UserResponseDto getOwner() {
         return owner;
     }
 
-    public void setOwner(MemberResponseDto owner) {
+    public void setOwner(UserResponseDto owner) {
         this.owner = owner;
     }
 
-    public MemberResponseDto getAssignee() {
+    public UserResponseDto getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(MemberResponseDto assignee) {
+    public void setAssignee(UserResponseDto assignee) {
         this.assignee = assignee;
     }
 
