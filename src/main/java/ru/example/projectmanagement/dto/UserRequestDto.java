@@ -17,6 +17,8 @@ public class UserRequestDto {
     private String email;
     @Schema(description = "Роль")
     private Role role;
+    @Schema(description = "Проект")
+    private Long projectId;
 
     public Long getId() {
         return id;
@@ -64,5 +66,13 @@ public class UserRequestDto {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }
