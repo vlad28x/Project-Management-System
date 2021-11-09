@@ -1,5 +1,4 @@
 --liquibase formatted sql
---liquibase formatted sql
 
 --changeset Vladislav Skibin:000000-create-enums
 create type status as enum('BACKLOG', 'IN_PROGRESS', 'DONE');
@@ -99,3 +98,38 @@ alter table users
             references project (id)
             on delete set null
             on update cascade;
+
+--changeset Vladislav Skibin:000006-insert-data
+insert into users(username, password, first_name, second_name, email, user_role) values
+('admin', 'admin', 'Владислав', 'Скибин', 'vlad.skibin@mail.ru', 'ADMIN'),
+('manager1', 'manager1', 'Виталий', 'Кудрявцев', 'vital45@gmail.com', 'MANAGER'),
+('manager2', 'manager2', 'Александра', 'Ястребова', 'alexa@gmail.com', 'MANAGER'),
+('programmer1', 'programmer1', 'Степан', 'Ангельский', 'stepa@gmail.com', 'PROGRAMMER'),
+('programmer2', 'programmer2', 'Игорь', 'Ядронский', 'igor@gmail.com', 'PROGRAMMER'),
+('programmer3', 'programmer3', 'Николай', 'Николаев', 'kolya@gmail.com', 'PROGRAMMER'),
+('programmer4', 'programmer4', 'Ярослав', 'Абровский', 'ydrovsky@gmail.com', 'PROGRAMMER');
+
+insert into project(project_name, project_description, project_start_date, project_end_date, project_status, owner_id) values
+('Система управления проектами', 'Проект написан с использование Spring Boot', '2021-10-25', '2021-12-15', 'IN_PROGRESS', 2),
+('Система управления автомойкой', 'Проект написан с использование Django', '2021-09-25', '2022-01-15', 'IN_PROGRESS', 3);
+
+update users set project_id=1 where id=4;
+update users set project_id=2 where id=5;
+update users set project_id=2 where id=6;
+update users set project_id=1 where id=7;
+
+insert into release(release_version, release_description, release_end_date, release_start_date) values
+('1.0 Beta', 'Бета версия проекта', '2021-10-25', '2021-11-02'),
+('1.0.2 Beta', 'Бета версия проекта', '2021-09-25', '2021-10-06');
+
+insert into task(task_name, task_description, task_created_at, task_updated_at, task_status, task_type, task_start_date, task_end_date, assigner_id, owner_id, project_id, release_id) values
+('TASK-1: Создать БД', 'Создать базу данных в СУБД PostgreSQL', (select current_timestamp), (select current_timestamp), 'BACKLOG', 'FEATURE', null, null, null, 2, 1, null),
+('TASK-2: Архитектура приложения', 'Архитектура приложения', (select current_timestamp), (select current_timestamp), 'IN_PROGRESS', 'FEATURE', '2021-10-26', null, 4, 2, 1, 1),
+('TASK-3: Сущности', 'Создать сущности', (select current_timestamp), (select current_timestamp), 'DONE', 'FEATURE', '2021-10-27', '2021-10-30', 4, 2, 1, 1),
+('TASK-4: Миграции', 'Добавить миграции', (select current_timestamp), (select current_timestamp), 'IN_PROGRESS', 'FEATURE', '2021-10-26', null, 7, 2, 1, 1),
+('TASK-5: Пофиксить баг', 'Пофиксить баг в контроллере', (select current_timestamp), (select current_timestamp), 'IN_PROGRESS', 'BUG', '2021-10-26', null, 7, 2, 1, 1),
+('TASK-1: Создать БД', 'Создать базу данных в СУБД PostgreSQL', (select current_timestamp), (select current_timestamp), 'BACKLOG', 'FEATURE', null, null, null, 3, 2, null),
+('TASK-2: Архитектура приложения', 'Архитектура приложения', (select current_timestamp), (select current_timestamp), 'IN_PROGRESS', 'FEATURE', '2021-10-26', null, 6, 3, 2, 2),
+('TASK-3: Сущности', 'Создать сущности', (select current_timestamp), (select current_timestamp), 'DONE', 'FEATURE', '2021-10-27', '2021-10-30', 4, 3, 2, 2),
+('TASK-4: Миграции', 'Добавить миграции', (select current_timestamp), (select current_timestamp), 'IN_PROGRESS', 'FEATURE', '2021-10-26', null, 4, 3, 2, 2),
+('TASK-5: Пофиксить баг', 'Пофиксить баг в контроллере', (select current_timestamp), (select current_timestamp), 'IN_PROGRESS', 'BUG', '2021-10-26', null, 6, 3, 2, 2);
