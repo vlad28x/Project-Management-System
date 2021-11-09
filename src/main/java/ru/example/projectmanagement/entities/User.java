@@ -3,6 +3,7 @@ package ru.example.projectmanagement.entities;
 import ru.example.projectmanagement.entities.enums.Role;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
