@@ -11,7 +11,11 @@ import java.util.List;
 @Service
 public class ReleaseServiceImpl implements ReleaseService {
 
-    private ReleaseRepository releaseRepository;
+    private final ReleaseRepository releaseRepository;
+
+    public ReleaseServiceImpl(ReleaseRepository releaseRepository) {
+        this.releaseRepository = releaseRepository;
+    }
 
     @Override
     public List<Release> getAll() {
