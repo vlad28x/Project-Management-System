@@ -11,12 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "task")
-public class Task {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Task extends AbstractEntity {
 
     @Column(name = "task_name")
     private String name;
@@ -63,14 +58,6 @@ public class Task {
     private Release release;
 
     public Task() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

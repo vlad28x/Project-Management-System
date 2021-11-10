@@ -7,12 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class User extends AbstractEntity {
 
     @Column(name = "username")
     private String username;
@@ -44,14 +39,6 @@ public class User {
     private List<Task> ownerTasks;
 
     public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {

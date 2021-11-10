@@ -1,17 +1,15 @@
 package ru.example.projectmanagement.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "release")
-public class Release {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Release extends AbstractEntity {
 
     @Column(name = "release_version")
     private String version;
@@ -29,14 +27,6 @@ public class Release {
     private List<Task> tasks;
 
     public Release() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getVersion() {
