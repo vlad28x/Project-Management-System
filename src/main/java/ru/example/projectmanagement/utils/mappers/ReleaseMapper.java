@@ -1,17 +1,14 @@
 package ru.example.projectmanagement.utils.mappers;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import ru.example.projectmanagement.dto.ReleaseRequestDto;
 import ru.example.projectmanagement.dto.ReleaseResponseDto;
 import ru.example.projectmanagement.entities.Release;
 
 @Mapper
-public interface ReleaseMapper {
+public abstract class ReleaseMapper {
 
-    ReleaseMapper INSTANCE = Mappers.getMapper(ReleaseMapper.class);
+    public abstract ReleaseResponseDto releaseToReleaseResponseDto(Release release);
 
-    ReleaseResponseDto releaseToReleaseResponseDto(Release release);
-
-    Release releaseRequestDtoToRelease(ReleaseRequestDto release);
+    public abstract Release releaseRequestDtoToRelease(ReleaseRequestDto release);
 }

@@ -2,6 +2,7 @@ package ru.example.projectmanagement.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class TaskController {
 
     private final TaskService taskService;
-    private final TaskMapper taskMapper = TaskMapper.INSTANCE;
+    private final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;

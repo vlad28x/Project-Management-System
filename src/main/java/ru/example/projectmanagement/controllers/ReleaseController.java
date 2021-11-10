@@ -3,6 +3,7 @@ package ru.example.projectmanagement.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class ReleaseController {
 
     private final ReleaseService releaseService;
-    private final ReleaseMapper releaseMapper = ReleaseMapper.INSTANCE;
+    private final ReleaseMapper releaseMapper = Mappers.getMapper(ReleaseMapper.class);
 
     public ReleaseController(ReleaseService releaseService) {
         this.releaseService = releaseService;
