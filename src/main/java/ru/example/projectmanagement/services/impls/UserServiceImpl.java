@@ -1,6 +1,6 @@
 package ru.example.projectmanagement.services.impls;
 
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
+import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.User;
 import ru.example.projectmanagement.exceptions.BadRequestException;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         try {
             return userRepository.save(user);
-        } catch (JpaObjectRetrievalFailureException e) {
+        } catch (NestedRuntimeException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public User update(User user) {
         try {
             return userRepository.save(user);
-        } catch (JpaObjectRetrievalFailureException e) {
+        } catch (NestedRuntimeException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }
