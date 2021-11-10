@@ -2,6 +2,7 @@ package ru.example.projectmanagement.services.impls;
 
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.User;
+import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.UserRepository;
 import ru.example.projectmanagement.services.UserService;
@@ -29,12 +30,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Неверный запрос");
+        }
     }
 
     @Override
     public User update(User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Неверный запрос");
+        }
     }
 
     @Override

@@ -7,20 +7,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectmanagement.dto.UserRequestDto;
 import ru.example.projectmanagement.dto.UserResponseDto;
+import ru.example.projectmanagement.entities.User;
+import ru.example.projectmanagement.services.UserService;
+import ru.example.projectmanagement.utils.mappers.UserMapper;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Tag(name = "Пользователи", description = "Взаимодействие с пользователями")
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserService userService;
+    private final UserMapper userMapper = UserMapper.INSTANCE;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @Operation(summary = "Получение всех пользователей", description = "Позволяет получить всех пользователей")
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        List<UserResponseDto> list = new ArrayList<>();
-        list.add(new UserResponseDto());
+        List<UserResponseDto> list = userService.getAll().stream()
+                .map(userMapper::userToUserResponseDto)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(list);
     }
 
@@ -28,23 +39,29 @@ public class UserController {
             description = "Позволяет получить одного пользователя по заданному ID")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(new UserResponseDto());
+        User user = userService.getById(id);
+        return ResponseEntity.ok(userMapper.userToUserResponseDto(user));
     }
 
     @Operation(summary = "Добавление пользователя", description = "Позволяет добавить пользователя")
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto newUser) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponseDto());
+        User user = userMapper.userRequestDtoToUser(newUser);
+        user = userService.add(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.userToUserResponseDto(user));
     }
 
     @Operation(summary = "Обновление пользователя", description = "Позволяет обновить пользователя по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto newUser) {
-        return ResponseEntity.ok(new UserResponseDto());
+        User user = userMapper.userRequestDtoToUser(newUser);
+        user = userService.add(user);
+        return ResponseEntity.ok(userMapper.userToUserResponseDto(user));
     }
 
     @Operation(summary = "Удаление пользователя", description = "Позволяет удалить пользователя по заданному ID")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
     }
 }

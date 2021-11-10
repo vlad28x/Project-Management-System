@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectmanagement.entities.enums.Status;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Schema(description = "Сущность проекта для запроса")
 public class ProjectRequestDto {

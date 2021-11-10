@@ -1,7 +1,6 @@
 package ru.example.projectmanagement.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import ru.example.projectmanagement.entities.User;
 import ru.example.projectmanagement.entities.enums.Role;
 
 @Schema(description = "Сущность пользователя для ответа")

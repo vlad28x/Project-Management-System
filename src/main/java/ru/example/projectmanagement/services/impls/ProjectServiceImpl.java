@@ -2,6 +2,7 @@ package ru.example.projectmanagement.services.impls;
 
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.Project;
+import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.ProjectRepository;
 import ru.example.projectmanagement.services.ProjectService;
@@ -29,12 +30,20 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project add(Project project) {
-        return projectRepository.save(project);
+        try {
+            return projectRepository.save(project);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Неверный запрос");
+        }
     }
 
     @Override
     public Project update(Project project) {
-        return projectRepository.save(project);
+        try {
+            return projectRepository.save(project);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Неверный запрос");
+        }
     }
 
     @Override

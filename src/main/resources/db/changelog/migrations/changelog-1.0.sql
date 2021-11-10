@@ -108,6 +108,8 @@ insert into project(project_name, project_description, project_start_date, proje
 ('Система управления проектами', 'Проект написан с использование Spring Boot', '2021-10-25', '2021-12-15', 'IN_PROGRESS', 2),
 ('Система управления автомойкой', 'Проект написан с использование Django', '2021-09-25', '2022-01-15', 'IN_PROGRESS', 3);
 
+update users set project_id=1 where id=2;
+update users set project_id=1 where id=3;
 update users set project_id=1 where id=4;
 update users set project_id=2 where id=5;
 update users set project_id=2 where id=6;

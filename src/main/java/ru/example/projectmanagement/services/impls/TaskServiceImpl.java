@@ -2,6 +2,7 @@ package ru.example.projectmanagement.services.impls;
 
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.Task;
+import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.TaskRepository;
 import ru.example.projectmanagement.services.TaskService;
@@ -29,12 +30,20 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task add(Task task) {
-        return taskRepository.save(task);
+        try {
+            return taskRepository.save(task);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Неверный запрос");
+        }
     }
 
     @Override
     public Task update(Task task) {
-        return taskRepository.save(task);
+        try {
+            return taskRepository.save(task);
+        } catch (RuntimeException e) {
+            throw new BadRequestException("Неверный запрос");
+        }
     }
 
     @Override

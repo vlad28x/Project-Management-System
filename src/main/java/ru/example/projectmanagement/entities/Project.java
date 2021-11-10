@@ -1,11 +1,9 @@
 package ru.example.projectmanagement.entities;
 
-import org.springframework.data.annotation.CreatedDate;
 import ru.example.projectmanagement.entities.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
