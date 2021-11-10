@@ -1,5 +1,6 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.Project;
 import ru.example.projectmanagement.exceptions.BadRequestException;
@@ -32,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
     public Project add(Project project) {
         try {
             return projectRepository.save(project);
-        } catch (RuntimeException e) {
+        } catch (JpaObjectRetrievalFailureException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }
@@ -41,7 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
     public Project update(Project project) {
         try {
             return projectRepository.save(project);
-        } catch (RuntimeException e) {
+        } catch (JpaObjectRetrievalFailureException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }

@@ -1,5 +1,6 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.Release;
 import ru.example.projectmanagement.exceptions.BadRequestException;
@@ -32,7 +33,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     public Release add(Release release) {
         try {
             return releaseRepository.save(release);
-        } catch (RuntimeException e) {
+        } catch (JpaObjectRetrievalFailureException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }
@@ -41,7 +42,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     public Release update(Release release) {
         try {
             return releaseRepository.save(release);
-        } catch (RuntimeException e) {
+        } catch (JpaObjectRetrievalFailureException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }

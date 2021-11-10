@@ -1,5 +1,6 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 import ru.example.projectmanagement.entities.Task;
 import ru.example.projectmanagement.exceptions.BadRequestException;
@@ -32,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
     public Task add(Task task) {
         try {
             return taskRepository.save(task);
-        } catch (RuntimeException e) {
+        } catch (JpaObjectRetrievalFailureException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }
@@ -41,7 +42,7 @@ public class TaskServiceImpl implements TaskService {
     public Task update(Task task) {
         try {
             return taskRepository.save(task);
-        } catch (RuntimeException e) {
+        } catch (JpaObjectRetrievalFailureException e) {
             throw new BadRequestException("Неверный запрос");
         }
     }
