@@ -26,7 +26,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getById(Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> new NotFoundException("Проект не найден", id));
+        return projectRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Project with ID %s not found", id)));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return projectRepository.save(project);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 
@@ -43,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return projectRepository.save(project);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 

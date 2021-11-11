@@ -26,7 +26,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public Release getById(Long id) {
-        return releaseRepository.findById(id).orElseThrow(() -> new NotFoundException("Релиз не найден", id));
+        return releaseRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Release with ID %s not found", id)));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         try {
             return releaseRepository.save(release);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 
@@ -43,7 +43,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         try {
             return releaseRepository.save(release);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 

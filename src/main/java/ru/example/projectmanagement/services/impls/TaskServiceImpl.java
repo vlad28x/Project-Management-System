@@ -26,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getById(Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Задача не найдена", id));
+        return taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Task with ID %s not found", id)));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskRepository.save(task);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 
@@ -43,7 +43,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskRepository.save(task);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 

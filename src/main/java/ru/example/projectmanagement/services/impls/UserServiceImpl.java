@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь не найден", id));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("User with ID %s not found", id)));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
             System.out.println(user.getProject() == null);
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Неверный запрос");
+            throw new BadRequestException("Bad request");
         }
     }
 

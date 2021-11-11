@@ -14,11 +14,10 @@ import java.time.LocalDateTime;
 public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ResponseWithId> handleNotFound(NotFoundException e) {
-        ResponseWithId response = new ResponseWithId();
+    public ResponseEntity<Response> handleNotFound(NotFoundException e) {
+        Response response = new Response();
         response.time = LocalDateTime.now();
         response.message = e.getMessage();
-        response.id = e.getId();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
@@ -48,36 +47,6 @@ public class GlobalControllerExceptionHandler {
 
         public void setMessage(String message) {
             this.message = message;
-        }
-    }
-
-    private class ResponseWithId {
-        private LocalDateTime time;
-        private String message;
-        private Long id;
-
-        public LocalDateTime getTime() {
-            return time;
-        }
-
-        public void setTime(LocalDateTime time) {
-            this.time = time;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
         }
     }
 
