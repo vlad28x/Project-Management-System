@@ -4,6 +4,7 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectmanagement.entities.Release;
+import ru.example.projectmanagement.entities.enums.Status;
 import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.ReleaseRepository;
@@ -53,5 +54,11 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public void delete(Long id) {
         releaseRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Long countUnderdoneTasks(Long id) {
+        return releaseRepository.countByIdAndTasksStatusNot(id, Status.DONE);
     }
 }

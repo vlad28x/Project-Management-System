@@ -65,4 +65,10 @@ public class ReleaseController {
     public void deleteRelease(@PathVariable Long id) {
         releaseService.delete(id);
     }
+
+    @GetMapping("{id}/countUnderdoneTasks")
+    public ResponseEntity<Long> countUnderdoneTasks(@PathVariable Long id) {
+        Long countUnderdoneTasks = releaseService.countUnderdoneTasks(id);
+        return ResponseEntity.ok(countUnderdoneTasks);
+    }
 }
