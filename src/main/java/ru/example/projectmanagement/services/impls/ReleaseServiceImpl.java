@@ -2,6 +2,7 @@ package ru.example.projectmanagement.services.impls;
 
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectmanagement.entities.Release;
 import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
@@ -19,11 +20,13 @@ public class ReleaseServiceImpl implements ReleaseService {
         this.releaseRepository = releaseRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Release> getAll() {
         return releaseRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Release getById(Long id) {
         return releaseRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Release with ID %s not found", id)));

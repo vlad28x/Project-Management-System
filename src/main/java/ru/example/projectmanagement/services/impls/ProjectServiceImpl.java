@@ -2,6 +2,7 @@ package ru.example.projectmanagement.services.impls;
 
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectmanagement.entities.Project;
 import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
@@ -19,11 +20,13 @@ public class ProjectServiceImpl implements ProjectService {
         this.projectRepository = projectRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Project> getAll() {
         return projectRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Project getById(Long id) {
         return projectRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Project with ID %s not found", id)));
