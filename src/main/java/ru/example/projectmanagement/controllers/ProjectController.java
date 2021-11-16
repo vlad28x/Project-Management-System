@@ -66,6 +66,7 @@ public class ProjectController {
         projectService.delete(id);
     }
 
+    @Operation(summary = "Завершение проекта", description = "Позволяет завершить проект по заданному ID")
     @PutMapping("{id}/complete")
     public ResponseEntity<ProjectResponseDto> completeProject(@PathVariable Long id) {
         Project project = projectService.complete(id);

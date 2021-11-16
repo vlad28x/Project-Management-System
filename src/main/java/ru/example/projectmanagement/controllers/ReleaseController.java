@@ -66,6 +66,8 @@ public class ReleaseController {
         releaseService.delete(id);
     }
 
+    @Operation(summary = "Подсчет количества невыполненных задач в заданный релиз",
+            description = "Позволяет посчитать количество невыполненных задач по заданному ID релиза")
     @GetMapping("{id}/countUnderdoneTasks")
     public ResponseEntity<Long> countUnderdoneTasks(@PathVariable Long id) {
         Long countUnderdoneTasks = releaseService.countUnderdoneTasks(id);
