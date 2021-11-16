@@ -64,4 +64,22 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id) {
         taskService.delete(id);
     }
+
+    @PutMapping("{taskId}/assign/user/{userId}")
+    public ResponseEntity<TaskResponseDto> assignUser(@PathVariable Long taskId, @PathVariable Long userId) {
+        Task task = taskService.assignUser(taskId, userId);
+        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
+
+    @PutMapping("{taskId}/assign/release/{releaseId}")
+    public ResponseEntity<TaskResponseDto> assignRelease(@PathVariable Long taskId, @PathVariable Long releaseId) {
+        Task task = taskService.assignRelease(taskId, releaseId);
+        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
+
+    @PutMapping("{id}/complete")
+    public ResponseEntity<TaskResponseDto> completeTask(@PathVariable Long id) {
+        Task task = taskService.complete(id);
+        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
 }
