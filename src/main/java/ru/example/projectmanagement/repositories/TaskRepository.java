@@ -5,10 +5,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.example.projectmanagement.entities.Task;
+import ru.example.projectmanagement.entities.enums.Status;
 
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
+
+    Long countByProjectIdAndStatusNot(Long projectId, Status status);
 
     @Modifying
     @Query("update Task t set t.assigner.id = :userId, " +
