@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User add(User user) {
         try {
-            System.out.println(user.getProject() == null);
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
             throw new BadRequestException("Bad request");
