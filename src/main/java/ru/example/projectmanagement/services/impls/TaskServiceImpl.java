@@ -1,5 +1,7 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
+
+    private static final Logger log = LoggerFactory.getLogger(TaskServiceImpl.class);
 
     private final TaskRepository taskRepository;
 
@@ -30,7 +34,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(readOnly = true)
     @Override
     public Task getById(Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Task with ID %s not found", id)));
+        return taskRepository.findById(id).orElseThrow(() -> {
+            log.error(String.format("Task with ID %s not found", id));
+            return new NotFoundException(String.format("Task with ID %s not found", id));
+        });
     }
 
     @Override
@@ -38,6 +45,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskRepository.save(task);
         } catch (NestedRuntimeException e) {
+            log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -47,6 +55,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskRepository.save(task);
         } catch (NestedRuntimeException e) {
+            log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -62,10 +71,12 @@ public class TaskServiceImpl implements TaskService {
         try {
             int count = taskRepository.assignUser(taskId, userId);
             if (count == 0) {
+                log.error(String.format("Task with ID %s not found", taskId));
                 throw new NotFoundException(String.format("Task with ID %s not found", taskId));
             }
             return getById(taskId);
         } catch (DataIntegrityViolationException e) {
+            log.error(String.format("Referential integrity violated for user with ID %s", userId));
             throw new BadRequestException(String.format("Referential integrity violated for user with ID %s", userId));
         }
     }
@@ -76,10 +87,12 @@ public class TaskServiceImpl implements TaskService {
         try {
             int count = taskRepository.assignRelease(taskId, releaseId);
             if (count == 0) {
+                log.error(String.format("Task with ID %s not found", taskId));
                 throw new NotFoundException(String.format("Task with ID %s not found", taskId));
             }
             return getById(taskId);
         } catch (DataIntegrityViolationException e) {
+            log.error(String.format("Referential integrity violated for release with ID %s", releaseId));
             throw new BadRequestException(String.format("Referential integrity violated for release with ID %s", releaseId));
         }
     }
@@ -89,6 +102,7 @@ public class TaskServiceImpl implements TaskService {
     public Task complete(Long id) {
         int count = taskRepository.complete(id);
         if (count == 0) {
+            log.error(String.format("Task with ID %s not found", id));
             throw new NotFoundException(String.format("Task with ID %s not found", id));
         }
         return getById(id);

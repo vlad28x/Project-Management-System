@@ -1,5 +1,7 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
+
+    private static final Logger log = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
@@ -33,7 +37,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(readOnly = true)
     @Override
     public Project getById(Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Project with ID %s not found", id)));
+        return projectRepository.findById(id).orElseThrow(() -> {
+            log.error(String.format("Project with ID %s not found", id));
+            return new NotFoundException(String.format("Project with ID %s not found", id));
+        });
     }
 
     @Override
@@ -41,6 +48,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return projectRepository.save(project);
         } catch (NestedRuntimeException e) {
+            log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -50,6 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return projectRepository.save(project);
         } catch (NestedRuntimeException e) {
+            log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
         }
     }
@@ -68,6 +77,7 @@ public class ProjectServiceImpl implements ProjectService {
             projectRepository.complete(id);
             return getById(id);
         }
+        log.error(String.format("Project with ID %s has %s underdone tasks", id, countUnderdoneTasks));
         throw new BadRequestException(String.format("Project with ID %s has %s underdone tasks", id, countUnderdoneTasks));
     }
 
