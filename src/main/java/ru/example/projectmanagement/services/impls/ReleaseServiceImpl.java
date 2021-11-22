@@ -38,7 +38,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         try {
             return releaseRepository.save(release);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class ReleaseServiceImpl implements ReleaseService {
         try {
             return releaseRepository.save(release);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 

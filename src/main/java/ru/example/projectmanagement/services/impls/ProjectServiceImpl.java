@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return projectRepository.save(project);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             return projectRepository.save(project);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 

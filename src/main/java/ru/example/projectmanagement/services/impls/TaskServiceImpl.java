@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskRepository.save(task);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskRepository.save(task);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -61,7 +61,9 @@ public class TaskServiceImpl implements TaskService {
     public Task assignUser(Long taskId, Long userId) {
         try {
             int count = taskRepository.assignUser(taskId, userId);
-            if (count == 0) throw new NotFoundException(String.format("Task with ID %s not found", taskId));
+            if (count == 0) {
+                throw new NotFoundException(String.format("Task with ID %s not found", taskId));
+            }
             return getById(taskId);
         } catch (DataIntegrityViolationException e) {
             throw new BadRequestException(String.format("Referential integrity violated for user with ID %s", userId));
@@ -73,7 +75,9 @@ public class TaskServiceImpl implements TaskService {
     public Task assignRelease(Long taskId, Long releaseId) {
         try {
             int count = taskRepository.assignRelease(taskId, releaseId);
-            if (count == 0) throw new NotFoundException(String.format("Task with ID %s not found", taskId));
+            if (count == 0) {
+                throw new NotFoundException(String.format("Task with ID %s not found", taskId));
+            }
             return getById(taskId);
         } catch (DataIntegrityViolationException e) {
             throw new BadRequestException(String.format("Referential integrity violated for release with ID %s", releaseId));
@@ -84,7 +88,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task complete(Long id) {
         int count = taskRepository.complete(id);
-        if (count == 0) throw new NotFoundException(String.format("Task with ID %s not found", id));
+        if (count == 0) {
+            throw new NotFoundException(String.format("Task with ID %s not found", id));
+        }
         return getById(id);
     }
 }

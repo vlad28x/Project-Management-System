@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            throw new BadRequestException(e.getMessage());
         }
     }
 
