@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectmanagement.dto.ProjectRequestDto;
 import ru.example.projectmanagement.dto.ProjectResponseDto;
@@ -15,6 +16,7 @@ import ru.example.projectmanagement.utils.mappers.ProjectMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@PreAuthorize("hasAnyRole('PROGRAMMER')")
 @Tag(name = "Проекты", description = "Взаимодействие с проектами")
 @RestController
 @RequestMapping("/projects")

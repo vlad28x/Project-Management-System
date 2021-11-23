@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectmanagement.dto.UserRequestDto;
 import ru.example.projectmanagement.dto.UserResponseDto;
@@ -15,6 +16,7 @@ import ru.example.projectmanagement.utils.mappers.UserMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@PreAuthorize("hasAnyRole('ADMIN')")
 @Tag(name = "Пользователи", description = "Взаимодействие с пользователями")
 @RestController
 @RequestMapping("/users")
