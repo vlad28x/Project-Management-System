@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.example.projectmanagement.exceptions.BadRequestException;
+import ru.example.projectmanagement.exceptions.InvalidUserDataException;
+import ru.example.projectmanagement.exceptions.JwtAuthenticationException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,22 @@ public class GlobalControllerExceptionHandler {
         response.time = LocalDateTime.now();
         response.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseEntity<Response> handleJwtAuthenticationException(JwtAuthenticationException e) {
+        Response response = new Response();
+        response.time = LocalDateTime.now();
+        response.message = e.getMessage();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(InvalidUserDataException.class)
+    public ResponseEntity<Response> handleInvalidUserData(InvalidUserDataException e) {
+        Response response = new Response();
+        response.time = LocalDateTime.now();
+        response.message = e.getMessage();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
     private class Response {

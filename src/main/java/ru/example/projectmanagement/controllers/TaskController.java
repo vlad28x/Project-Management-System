@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectmanagement.dto.TaskRequestDto;
 import ru.example.projectmanagement.dto.TaskResponseDto;
@@ -27,6 +28,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Получение всех задач", description = "Позволяет получить все задачи")
     @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
@@ -36,6 +38,7 @@ public class TaskController {
         return ResponseEntity.ok(list);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Получение одной задачи", description = "Позволяет получить одну задачу по заданному ID")
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Long id) {
@@ -43,6 +46,7 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Добавление задачи", description = "Позволяет добавить задачу")
     @PostMapping
     public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto newTask) {
@@ -51,6 +55,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskMapper.taskToTaskResponseDto(task));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Обновление задачи", description = "Позволяет обновить задачу по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponseDto> updateTask(@PathVariable Long id, @RequestBody TaskRequestDto newTask) {
@@ -59,12 +64,14 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Удаление задачи", description = "Позволяет удалить задачу по заданному ID")
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         taskService.delete(id);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Назначение исполнителя",
             description = "Позволяет назначить исполнителя по заданному ID для задачи по заданному ID")
     @PutMapping("{taskId}/assign/user/{userId}")
@@ -73,6 +80,7 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Назначение релиза",
             description = "Позволяет назначить релиз по заданному ID для задачи по заданному ID")
     @PutMapping("{taskId}/assign/release/{releaseId}")
@@ -81,6 +89,7 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
     }
 
+    @PreAuthorize("hasRole('PROGRAMMER')")
     @Operation(summary = "Завершение задачи", description = "Позволяет завершить задачу по заданному ID")
     @PutMapping("{id}/complete")
     public ResponseEntity<TaskResponseDto> completeTask(@PathVariable Long id) {
