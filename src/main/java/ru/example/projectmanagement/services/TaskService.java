@@ -1,5 +1,6 @@
 package ru.example.projectmanagement.services;
 
+import ru.example.projectmanagement.dto.TaskFilterDTO;
 import ru.example.projectmanagement.entities.Task;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface TaskService {
     Task assignRelease(Long taskId, Long releaseId);
 
     Task complete(Long id);
+
+    List<Task> filterTask(TaskFilterDTO taskFilter);
 }

@@ -11,6 +11,8 @@ import ru.example.projectmanagement.exceptions.JwtAuthenticationException;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
 
@@ -37,7 +39,7 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + 1000 * 360 * 24);
+        Date validity = Date.from(LocalDate.now().plusDays(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -65,6 +67,10 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(authorizationHeader);
+        String token = request.getHeader(authorizationHeader);
+        if (token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+        return null;
     }
 }

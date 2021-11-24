@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import ru.example.projectmanagement.dto.TaskFilterDTO;
 import ru.example.projectmanagement.dto.TaskRequestDto;
 import ru.example.projectmanagement.dto.TaskResponseDto;
 import ru.example.projectmanagement.entities.Task;
@@ -95,5 +96,15 @@ public class TaskController {
     public ResponseEntity<TaskResponseDto> completeTask(@PathVariable Long id) {
         Task task = taskService.complete(id);
         return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
+
+    @PreAuthorize("hasRole('MANAGER')")
+    @Operation(summary = "Фильтрация задачи", description = "Позволяет фильтровать задачи по строковым типам и перечислениям")
+    @GetMapping("/filter")
+    public ResponseEntity<List<TaskResponseDto>> filterTasks(@RequestBody TaskFilterDTO taskFilter) {
+        List<TaskResponseDto> list = taskService.filterTask(taskFilter).stream()
+                .map(taskMapper::taskToTaskResponseDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(list);
     }
 }
