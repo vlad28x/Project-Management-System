@@ -99,7 +99,7 @@ public class TaskController {
     }
 
     @PreAuthorize("hasRole('MANAGER')")
-    @Operation(summary = "Фильтрация задачи", description = "Позволяет фильтровать задачи по строковым типам и перечислениям")
+    @Operation(summary = "Фильтрация задач", description = "Позволяет фильтровать задачи по строковым типам и перечислениям")
     @GetMapping("/filter")
     public ResponseEntity<List<TaskResponseDto>> filterTasks(@RequestBody TaskFilterDTO taskFilter) {
         List<TaskResponseDto> list = taskService.filterTask(taskFilter).stream()
