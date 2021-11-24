@@ -15,7 +15,7 @@ import javax.persistence.criteria.Root;
 public class TaskSpecification implements Specification<Task> {
 
     private final TaskFilterDTO taskFilter;
-    public Class<?> typeField;
+    private Class<?> typeField;
 
     public TaskSpecification(TaskFilterDTO taskFilter) {
         this.taskFilter = taskFilter;
