@@ -35,6 +35,7 @@ public class TaskResponseDto {
     private Long projectId;
     @Schema(description = "Релиз")
     private Long releaseId;
+
     public Long getId() {
         return id;
     }
