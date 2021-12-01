@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectservice.dto.ProjectRequestDto;
 import ru.example.projectservice.dto.ProjectResponseDto;
@@ -19,7 +21,6 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
@@ -66,5 +67,11 @@ public class ProjectController {
     @PutMapping("{id}/complete")
     public ResponseEntity<ProjectResponseDto> completeProject(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.complete(id));
+    }
+
+    @PreAuthorize("hasRole('CUSTOMER')")
+    @PutMapping("/pay")
+    public ResponseEntity<ProjectResponseDto> payDebt(@RequestHeader("Authorization") String jwt) {
+        return ResponseEntity.ok(projectService.pay(jwt));
     }
 }

@@ -1,5 +1,6 @@
 package ru.example.projectservice.services;
 
+import org.springframework.security.core.userdetails.User;
 import ru.example.projectservice.dto.ProjectRequestDto;
 import ru.example.projectservice.dto.ProjectResponseDto;
 
@@ -55,4 +56,11 @@ public interface ProjectService {
      * @return ProjectResponseDto
      */
     ProjectResponseDto complete(Long id);
+
+    /**
+     * Pay debt
+     * @param jwt - token
+     * @return ProjectResponseDto
+     */
+    ProjectResponseDto pay(String jwt);
 }

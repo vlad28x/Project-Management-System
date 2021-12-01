@@ -21,4 +21,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Modifying
     @Query("update Project p set p.status = ru.example.projectservice.entities.enums.ProjectStatus.DONE where p.id = :id")
     int complete(Long id);
+
+    /**
+     * Find project by username of customer
+     * @param username - username of customer
+     * @return project entity
+     */
+    Project findByCustomerUsername(String username);
 }

@@ -56,7 +56,7 @@ public class AccountController {
 
     @PreAuthorize("hasRole('CUSTOMER')")
     @PutMapping("/pay")
-    public ResponseEntity<DebtResponseDto> payDebt(@RequestBody DebtRequestDto debt, @AuthenticationPrincipal User user) {
+    public ResponseEntity<DebtResponseDto> payDebt(@RequestHeader("Authorization") String jwt, @RequestBody DebtRequestDto debt, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(accountService.pay(debt, user.getUsername()));
     }
 }
