@@ -3,7 +3,7 @@ package ru.example.projectservice.services.specifications;
 import org.springframework.data.jpa.domain.Specification;
 import ru.example.projectservice.dto.TaskFilterDTO;
 import ru.example.projectservice.entities.Task;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 import ru.example.projectservice.entities.enums.Type;
 import ru.example.projectservice.exceptions.BadRequestException;
 
@@ -67,8 +67,8 @@ public class TaskSpecification implements Specification<Task> {
     }
 
     private Object castToRequiredType(Class<?> fieldType, String value) {
-        if (fieldType.isAssignableFrom(Status.class)) {
-            return Status.valueOf(value);
+        if (fieldType.isAssignableFrom(TaskStatus.class)) {
+            return TaskStatus.valueOf(value);
         } else if (fieldType.isAssignableFrom(Type.class)) {
             return Type.valueOf(value);
         }

@@ -1,7 +1,7 @@
 package ru.example.projectservice.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 import ru.example.projectservice.entities.enums.Type;
 
 import java.time.LocalDate;
@@ -20,7 +20,7 @@ public class TaskResponseDto {
     @Schema(description = "Время обновления")
     private LocalDateTime updatedAt;
     @Schema(description = "Статус")
-    private Status status;
+    private TaskStatus status;
     @Schema(description = "Тип")
     private Type type;
     @Schema(description = "Дата начала задачи")
@@ -60,11 +60,11 @@ public class TaskResponseDto {
         this.description = description;
     }
 
-    public Status getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

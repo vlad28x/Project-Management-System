@@ -1,5 +1,5 @@
 package ru.example.projectservice.entities.enums;
 
-public enum Status {
+public enum TaskStatus {
     BACKLOG, IN_PROGRESS, DONE
 }

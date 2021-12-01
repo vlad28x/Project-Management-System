@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.example.projectservice.entities.Task;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 
 /**
  * Specific extension of JpaRepository for Task.
@@ -21,7 +21,7 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
      * @param status    - status of task
      * @return the number of tasks
      */
-    Long countByProjectIdAndStatusNot(Long projectId, Status status);
+    Long countByProjectIdAndStatusNot(Long projectId, TaskStatus status);
 
     /**
      * Assign a task to a specific user.
@@ -32,7 +32,7 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
      */
     @Modifying
     @Query("update Task t set t.assigner.id = :userId, " +
-            "t.status = ru.example.projectservice.entities.enums.Status.IN_PROGRESS " +
+            "t.status = ru.example.projectservice.entities.enums.TaskStatus.IN_PROGRESS " +
             "where t.id = :taskId")
     int assignUser(Long taskId, Long userId);
 
@@ -54,6 +54,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
      * @return the number of changed entities
      */
     @Modifying
-    @Query("update Task t set t.status = ru.example.projectservice.entities.enums.Status.DONE where t.id = :id")
+    @Query("update Task t set t.status = ru.example.projectservice.entities.enums.TaskStatus.DONE where t.id = :id")
     int complete(Long id);
 }

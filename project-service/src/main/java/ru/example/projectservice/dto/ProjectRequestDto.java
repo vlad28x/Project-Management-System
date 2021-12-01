@@ -1,7 +1,8 @@
 package ru.example.projectservice.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.ProjectStatus;
+import ru.example.projectservice.entities.enums.TaskStatus;
 
 import java.time.LocalDate;
 
@@ -17,10 +18,14 @@ public class ProjectRequestDto {
     private LocalDate startDate;
     @Schema(description = "Дата завершения проекта")
     private LocalDate endDate;
+    @Schema(description = "Задолженность")
+    private Integer debt;
     @Schema(description = "Статус")
-    private Status status;
+    private ProjectStatus status;
     @Schema(description = "Создатель проекта")
     private Long ownerId;
+    @Schema(description = "Заказчик")
+    private Long customerId;
 
     public Long getId() {
         return id;
@@ -62,11 +67,11 @@ public class ProjectRequestDto {
         this.endDate = endDate;
     }
 
-    public Status getStatus() {
+    public ProjectStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(ProjectStatus status) {
         this.status = status;
     }
 
@@ -76,5 +81,21 @@ public class ProjectRequestDto {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public Integer getDebt() {
+        return debt;
+    }
+
+    public void setDebt(Integer debt) {
+        this.debt = debt;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 }

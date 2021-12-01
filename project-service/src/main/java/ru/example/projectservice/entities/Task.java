@@ -2,7 +2,7 @@ package ru.example.projectservice.entities;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 import ru.example.projectservice.entities.enums.Type;
 
 import javax.persistence.*;
@@ -29,7 +29,7 @@ public class Task extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "task_status")
-    private Status status;
+    private TaskStatus status;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "task_type")
@@ -92,11 +92,11 @@ public class Task extends AbstractEntity {
         this.updatedAt = updatedAt;
     }
 
-    public Status getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectservice.dto.ProjectRequestDto;
 import ru.example.projectservice.dto.ProjectResponseDto;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 import ru.example.projectservice.exceptions.BadRequestException;
 import ru.example.projectservice.exceptions.NotFoundException;
 import ru.example.projectservice.repositories.ProjectRepository;
@@ -82,7 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectResponseDto complete(Long id) {
-        Long countUnderdoneTasks = taskRepository.countByProjectIdAndStatusNot(id, Status.DONE);
+        Long countUnderdoneTasks = taskRepository.countByProjectIdAndStatusNot(id, TaskStatus.DONE);
         if (countUnderdoneTasks == 0) {
             projectRepository.complete(id);
             return getById(id);

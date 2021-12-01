@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectservice.dto.ReleaseRequestDto;
 import ru.example.projectservice.dto.ReleaseResponseDto;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 import ru.example.projectservice.exceptions.BadRequestException;
 import ru.example.projectservice.exceptions.NotFoundException;
 import ru.example.projectservice.repositories.ReleaseRepository;
@@ -79,6 +79,6 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Transactional
     @Override
     public Long countUnderdoneTasks(Long id) {
-        return releaseRepository.countByIdAndTasksStatusNot(id, Status.DONE);
+        return releaseRepository.countByIdAndTasksStatusNot(id, TaskStatus.DONE);
     }
 }

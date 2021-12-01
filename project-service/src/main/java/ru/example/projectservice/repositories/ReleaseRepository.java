@@ -3,7 +3,7 @@ package ru.example.projectservice.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.example.projectservice.entities.Release;
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.TaskStatus;
 
 /**
  * Specific extension of JpaRepository for Release.
@@ -18,5 +18,5 @@ public interface ReleaseRepository extends JpaRepository<Release, Long> {
      * @param status - status of tasks
      * @return the number of tasks
      */
-    Long countByIdAndTasksStatusNot(Long id, Status status);
+    Long countByIdAndTasksStatusNot(Long id, TaskStatus status);
 }

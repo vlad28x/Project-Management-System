@@ -1,6 +1,7 @@
 package ru.example.projectservice.entities;
 
-import ru.example.projectservice.entities.enums.Status;
+import ru.example.projectservice.entities.enums.ProjectStatus;
+import ru.example.projectservice.entities.enums.TaskStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,13 +23,20 @@ public class Project extends AbstractEntity {
     @Column(name = "project_end_date")
     private LocalDate endDate;
 
+    @Column(name = "debt")
+    private Integer debt;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "project_status")
-    private Status status;
+    private ProjectStatus status;
 
     @OneToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private User customer;
 
     @OneToMany(mappedBy = "project")
     private Set<User> users;
@@ -71,11 +79,11 @@ public class Project extends AbstractEntity {
         this.endDate = endDate;
     }
 
-    public Status getStatus() {
+    public ProjectStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(ProjectStatus status) {
         this.status = status;
     }
 
@@ -101,5 +109,21 @@ public class Project extends AbstractEntity {
 
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public Integer getDebt() {
+        return debt;
+    }
+
+    public void setDebt(Integer debt) {
+        this.debt = debt;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 }
