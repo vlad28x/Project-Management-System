@@ -1,5 +1,7 @@
 package ru.example.projectmanagement.services;
 
+import ru.example.projectmanagement.dto.ReleaseRequestDto;
+import ru.example.projectmanagement.dto.ReleaseResponseDto;
 import ru.example.projectmanagement.entities.Release;
 
 import java.util.List;
@@ -12,33 +14,33 @@ public interface ReleaseService {
     /**
      * Get all releases.
      *
-     * @return list of releases
+     * @return list of ReleaseResponseDto
      */
-    List<Release> getAll();
+    List<ReleaseResponseDto> getAll();
 
     /**
      * Get specific release.
      *
      * @param id - identifier of release
-     * @return release entity
+     * @return ReleaseResponseDto
      */
-    Release getById(Long id);
+    ReleaseResponseDto getById(Long id);
 
     /**
      * Add release.
      *
-     * @param release - release entity
-     * @return release entity
+     * @param newRelease - ReleaseRequestDto
+     * @return ReleaseResponseDto
      */
-    Release add(Release release);
+    ReleaseResponseDto add(ReleaseRequestDto newRelease);
 
     /**
      * Update release.
      *
-     * @param release - release entity
-     * @return release entity
+     * @param newRelease - ReleaseRequestDto
+     * @return ReleaseResponseDto
      */
-    Release update(Release release);
+    ReleaseResponseDto update(ReleaseRequestDto newRelease);
 
     /**
      * Delete specific release.

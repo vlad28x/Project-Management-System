@@ -4,7 +4,7 @@ import ru.example.projectmanagement.entities.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -31,10 +31,10 @@ public class Project extends AbstractEntity {
     private User owner;
 
     @OneToMany(mappedBy = "project")
-    private List<User> users;
+    private Set<User> users;
 
     @OneToMany(mappedBy = "project")
-    private List<Task> tasks;
+    private Set<Task> tasks;
 
     public Project() {
     }
@@ -87,20 +87,19 @@ public class Project extends AbstractEntity {
         this.owner = owner;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
-    public List<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
-
 }

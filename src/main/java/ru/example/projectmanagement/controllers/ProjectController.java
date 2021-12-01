@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final ProjectMapper projectMapper = Mappers.getMapper(ProjectMapper.class);
+
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
@@ -33,36 +33,28 @@ public class ProjectController {
     @Operation(summary = "Получение всех проектов", description = "Позволяет получить все проекты")
     @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getAllProjects() {
-        List<ProjectResponseDto> list = projectService.getAll().stream()
-                .map(projectMapper::projectToProjectResponseDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(projectService.getAll());
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Получение одного проекта", description = "Позволяет получить один проект по заданному ID")
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable Long id) {
-        Project project = projectService.getById(id);
-        return ResponseEntity.ok(projectMapper.projectToProjectResponseDto(project));
+        return ResponseEntity.ok(projectService.getById(id));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Добавление проекта", description = "Позволяет добавить проект")
     @PostMapping
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto newProject) {
-        Project project = projectMapper.projectRequestDtoToProject(newProject);
-        project = projectService.add(project);
-        return ResponseEntity.status(HttpStatus.CREATED).body(projectMapper.projectToProjectResponseDto(project));
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectService.add(newProject));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Обновление проекта", description = "Позволяет обновить проект по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto newProject) {
-        Project project = projectMapper.projectRequestDtoToProject(newProject);
-        project = projectService.add(project);
-        return ResponseEntity.ok(projectMapper.projectToProjectResponseDto(project));
+        return ResponseEntity.ok(projectService.update(newProject));
 
     }
 
@@ -77,7 +69,6 @@ public class ProjectController {
     @Operation(summary = "Завершение проекта", description = "Позволяет завершить проект по заданному ID")
     @PutMapping("{id}/complete")
     public ResponseEntity<ProjectResponseDto> completeProject(@PathVariable Long id) {
-        Project project = projectService.complete(id);
-        return ResponseEntity.ok(projectMapper.projectToProjectResponseDto(project));
+        return ResponseEntity.ok(projectService.complete(id));
     }
 }

@@ -24,19 +24,23 @@ public class TaskSpecification implements Specification<Task> {
     @Override
     public Predicate toPredicate(Root<Task> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         if (!taskFilter.isHasNullValue()) {
-            try {
-                typeField = Task.class.getDeclaredField(taskFilter.getKey()).getType();
-                if (typeField == String.class) {
-                    return stringSpecification(root, query, criteriaBuilder);
-                } else if (typeField.isEnum()) {
-                    return enumSpecification(root, query, criteriaBuilder);
-                }
-                return null;
-            } catch (NoSuchFieldException e) {
-                throw new BadRequestException("Invalid key value");
-            }
+            return typeFieldSpecification(root, query, criteriaBuilder);
         } else {
             throw new BadRequestException("Body doesn't match a structure of a filter");
+        }
+    }
+
+    private Predicate typeFieldSpecification(Root<Task> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        try {
+            typeField = Task.class.getDeclaredField(taskFilter.getKey()).getType();
+            if (typeField == String.class) {
+                return stringSpecification(root, query, criteriaBuilder);
+            } else if (typeField.isEnum()) {
+                return enumSpecification(root, query, criteriaBuilder);
+            }
+            return null;
+        } catch (NoSuchFieldException e) {
+            throw new BadRequestException("Invalid key value");
         }
     }
 

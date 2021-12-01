@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class ReleaseController {
 
     private final ReleaseService releaseService;
-    private final ReleaseMapper releaseMapper = Mappers.getMapper(ReleaseMapper.class);
 
     public ReleaseController(ReleaseService releaseService) {
         this.releaseService = releaseService;
@@ -33,36 +32,28 @@ public class ReleaseController {
     @Operation(summary = "Получение всех релизов", description = "Позволяет получить все релизы")
     @GetMapping
     public ResponseEntity<List<ReleaseResponseDto>> getAllReleases() {
-        List<ReleaseResponseDto> list = releaseService.getAll().stream()
-                .map(releaseMapper::releaseToReleaseResponseDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(releaseService.getAll());
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Получение одного релиза", description = "Позволяет получить один релиз по заданному ID")
     @GetMapping("/{id}")
     public ResponseEntity<ReleaseResponseDto> getReleaseById(@PathVariable Long id) {
-        Release release = releaseService.getById(id);
-        return ResponseEntity.ok(releaseMapper.releaseToReleaseResponseDto(release));
+        return ResponseEntity.ok(releaseService.getById(id));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Добавление релиза", description = "Позволяет добавить релиз")
     @PostMapping
     public ResponseEntity<ReleaseResponseDto> createRelease(@RequestBody ReleaseRequestDto newRelease) {
-        Release release = releaseMapper.releaseRequestDtoToRelease(newRelease);
-        release = releaseService.add(release);
-        return ResponseEntity.status(HttpStatus.CREATED).body(releaseMapper.releaseToReleaseResponseDto(release));
+        return ResponseEntity.status(HttpStatus.CREATED).body(releaseService.add(newRelease));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Обновление релиза", description = "Позволяет обновить релиз по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<ReleaseResponseDto> updateRelease(@PathVariable Long id, @RequestBody ReleaseRequestDto newRelease) {
-        Release release = releaseMapper.releaseRequestDtoToRelease(newRelease);
-        release = releaseService.add(release);
-        return ResponseEntity.ok(releaseMapper.releaseToReleaseResponseDto(release));
+        return ResponseEntity.ok(releaseService.update(newRelease));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
@@ -77,7 +68,6 @@ public class ReleaseController {
             description = "Позволяет посчитать количество невыполненных задач по заданному ID релиза")
     @GetMapping("{id}/countUnderdoneTasks")
     public ResponseEntity<Long> countUnderdoneTasks(@PathVariable Long id) {
-        Long countUnderdoneTasks = releaseService.countUnderdoneTasks(id);
-        return ResponseEntity.ok(countUnderdoneTasks);
+        return ResponseEntity.ok(releaseService.countUnderdoneTasks(id));
     }
 }

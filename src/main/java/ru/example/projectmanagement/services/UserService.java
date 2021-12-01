@@ -1,5 +1,7 @@
 package ru.example.projectmanagement.services;
 
+import ru.example.projectmanagement.dto.UserRequestDto;
+import ru.example.projectmanagement.dto.UserResponseDto;
 import ru.example.projectmanagement.entities.User;
 
 import java.util.List;
@@ -12,33 +14,33 @@ public interface UserService {
     /**
      * Get all users.
      *
-     * @return list of users
+     * @return list of UserResponseDto
      */
-    List<User> getAll();
+    List<UserResponseDto> getAll();
 
     /**
      * Get specific user.
      *
      * @param id - identifier of user
-     * @return user entity
+     * @return UserResponseDto
      */
-    User getById(Long id);
+    UserResponseDto getById(Long id);
 
     /**
      * Add user.
      *
-     * @param user - user entity
-     * @return user entity
+     * @param newUser - UserRequestDto
+     * @return UserResponseDto
      */
-    User add(User user);
+    UserResponseDto add(UserRequestDto newUser);
 
     /**
      * Update user.
      *
-     * @param user - user entity
-     * @return user entity
+     * @param newUser - UserRequestDto
+     * @return UserResponseDto
      */
-    User update(User user);
+    UserResponseDto update(UserRequestDto newUser);
 
     /**
      * Delete specific user.
@@ -46,5 +48,12 @@ public interface UserService {
      * @param id - identifier of user
      */
     void delete(Long id);
+
+    /**
+     * Find User by username
+     * @param username - username of User
+     * @return User entity
+     */
+    User findByUsername(String username);
 
 }

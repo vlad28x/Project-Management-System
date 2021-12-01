@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -33,10 +32,7 @@ public class UserController {
     @Operation(summary = "Получение всех пользователей", description = "Позволяет получить всех пользователей")
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        List<UserResponseDto> list = userService.getAll().stream()
-                .map(userMapper::userToUserResponseDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @PreAuthorize("hasRole('PROGRAMMER')")
@@ -44,26 +40,21 @@ public class UserController {
             description = "Позволяет получить одного пользователя по заданному ID")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
-        User user = userService.getById(id);
-        return ResponseEntity.ok(userMapper.userToUserResponseDto(user));
+        return ResponseEntity.ok(userService.getById(id));
     }
 
-    @PreAuthorize("hasRole('PROGRAMMER')")
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Добавление пользователя", description = "Позволяет добавить пользователя")
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto newUser) {
-        User user = userMapper.userRequestDtoToUser(newUser);
-        user = userService.add(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.userToUserResponseDto(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.add(newUser));
     }
 
     @PreAuthorize("hasRole('PROGRAMMER')")
     @Operation(summary = "Обновление пользователя", description = "Позволяет обновить пользователя по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto newUser) {
-        User user = userMapper.userRequestDtoToUser(newUser);
-        user = userService.add(user);
-        return ResponseEntity.ok(userMapper.userToUserResponseDto(user));
+        return ResponseEntity.ok(userService.update(newUser));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
