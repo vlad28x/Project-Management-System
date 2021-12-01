@@ -38,9 +38,6 @@ public class User extends AbstractEntity {
     @OneToMany(mappedBy = "owner")
     private List<Task> ownerTasks;
 
-    public User() {
-    }
-
     public String getUsername() {
         return username;
     }

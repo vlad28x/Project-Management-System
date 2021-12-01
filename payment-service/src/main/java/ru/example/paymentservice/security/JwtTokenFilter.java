@@ -1,13 +1,10 @@
-package ru.example.projectservice.security;
+package ru.example.paymentservice.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import ru.example.projectservice.exceptions.JwtAuthenticationException;
+import ru.example.paymentservice.exceptions.JwtAuthenticationException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

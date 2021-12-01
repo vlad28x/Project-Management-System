@@ -44,9 +44,6 @@ public class Project extends AbstractEntity {
     @OneToMany(mappedBy = "project")
     private Set<Task> tasks;
 
-    public Project() {
-    }
-
     public String getName() {
         return name;
     }

@@ -26,9 +26,6 @@ public class Release extends AbstractEntity {
     @OneToMany(mappedBy = "release")
     private List<Task> tasks;
 
-    public Release() {
-    }
-
     public String getVersion() {
         return version;
     }

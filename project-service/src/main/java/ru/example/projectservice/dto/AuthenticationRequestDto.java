@@ -3,16 +3,16 @@ package ru.example.projectservice.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Сущность аутентификации для запроса")
-public class AuthenticationRequestDTO {
+public class AuthenticationRequestDto {
     @Schema(description = "Никнейм")
     private String username;
     @Schema(description = "Пароль")
     private String password;
 
-    public AuthenticationRequestDTO() {
+    public AuthenticationRequestDto() {
     }
 
-    public AuthenticationRequestDTO(String username, String password) {
+    public AuthenticationRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
     }

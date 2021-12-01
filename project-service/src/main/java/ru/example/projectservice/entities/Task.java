@@ -57,9 +57,6 @@ public class Task extends AbstractEntity {
     @JoinColumn(name = "release_id")
     private Release release;
 
-    public Task() {
-    }
-
     public String getName() {
         return name;
     }

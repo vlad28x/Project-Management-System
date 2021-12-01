@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.example.projectservice.dto.AuthenticationRequestDTO;
+import ru.example.projectservice.dto.AuthenticationRequestDto;
 import ru.example.projectservice.entities.User;
 import ru.example.projectservice.exceptions.InvalidUserDataException;
 import ru.example.projectservice.security.JwtTokenProvider;
@@ -35,7 +35,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<Map<String, String>> authenticate(@RequestBody AuthenticationRequestDto request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             User user = userService.findByUsername(request.getUsername());
