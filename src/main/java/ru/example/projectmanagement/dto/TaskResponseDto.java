@@ -28,13 +28,13 @@ public class TaskResponseDto {
     @Schema(description = "Дата завершения задачи")
     private LocalDate endDate;
     @Schema(description = "Назначенный на выполнение задачи")
-    private UserResponseDto assigner;
+    private Long assignerId;
     @Schema(description = "Создатель задачи")
-    private UserResponseDto owner;
+    private Long ownerId;
     @Schema(description = "Проект")
-    private ProjectResponseDto project;
+    private Long projectId;
     @Schema(description = "Релиз")
-    private ReleaseResponseDto release;
+    private Long releaseId;
 
     public Long getId() {
         return id;
@@ -92,38 +92,6 @@ public class TaskResponseDto {
         this.endDate = endDate;
     }
 
-    public ReleaseResponseDto getRelease() {
-        return release;
-    }
-
-    public void setRelease(ReleaseResponseDto release) {
-        this.release = release;
-    }
-
-    public UserResponseDto getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserResponseDto owner) {
-        this.owner = owner;
-    }
-
-    public UserResponseDto getAssigner() {
-        return assigner;
-    }
-
-    public void setAssigner(UserResponseDto assigner) {
-        this.assigner = assigner;
-    }
-
-    public ProjectResponseDto getProject() {
-        return project;
-    }
-
-    public void setProject(ProjectResponseDto project) {
-        this.project = project;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -138,5 +106,37 @@ public class TaskResponseDto {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Long getAssignerId() {
+        return assignerId;
+    }
+
+    public void setAssignerId(Long assignerId) {
+        this.assignerId = assignerId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getReleaseId() {
+        return releaseId;
+    }
+
+    public void setReleaseId(Long releaseId) {
+        this.releaseId = releaseId;
     }
 }

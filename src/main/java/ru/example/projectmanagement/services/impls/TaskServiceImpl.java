@@ -6,11 +6,13 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.example.projectmanagement.dto.TaskFilterDTO;
 import ru.example.projectmanagement.entities.Task;
 import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.TaskRepository;
 import ru.example.projectmanagement.services.TaskService;
+import ru.example.projectmanagement.services.specifications.TaskSpecification;
 
 import java.util.List;
 
@@ -106,5 +108,11 @@ public class TaskServiceImpl implements TaskService {
             throw new NotFoundException(String.format("Task with ID %s not found", id));
         }
         return getById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Task> filterTask(TaskFilterDTO taskFilter) {
+        TaskSpecification specification = new TaskSpecification(taskFilter);
+        return taskRepository.findAll(specification);
     }
 }

@@ -8,6 +8,12 @@ import ru.example.projectmanagement.entities.Task;
 @Mapper
 public abstract class TaskMapper {
 
+    @Mappings({
+            @Mapping(source = "assigner.id", target = "assignerId"),
+            @Mapping(source = "owner.id", target = "ownerId"),
+            @Mapping(source = "project.id", target = "projectId"),
+            @Mapping(source = "release.id", target = "releaseId")
+    })
     public abstract TaskResponseDto taskToTaskResponseDto(Task task);
 
     @Mappings({
