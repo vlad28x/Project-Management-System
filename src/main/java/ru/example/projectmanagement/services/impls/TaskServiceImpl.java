@@ -1,5 +1,6 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedRuntimeException;
@@ -7,19 +8,24 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectmanagement.dto.TaskFilterDTO;
+import ru.example.projectmanagement.dto.TaskRequestDto;
+import ru.example.projectmanagement.dto.TaskResponseDto;
 import ru.example.projectmanagement.entities.Task;
 import ru.example.projectmanagement.exceptions.BadRequestException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.TaskRepository;
 import ru.example.projectmanagement.services.TaskService;
 import ru.example.projectmanagement.services.specifications.TaskSpecification;
+import ru.example.projectmanagement.utils.mappers.TaskMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
     private static final Logger log = LoggerFactory.getLogger(TaskServiceImpl.class);
+    private static final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
 
     private final TaskRepository taskRepository;
 
@@ -29,23 +35,27 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Task> getAll() {
-        return taskRepository.findAll();
+    public List<TaskResponseDto> getAll() {
+        return taskRepository.findAll().stream()
+                .map(taskMapper::taskToTaskResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Task getById(Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> {
+    public TaskResponseDto getById(Long id) {
+        return taskMapper.taskToTaskResponseDto(taskRepository.findById(id).orElseThrow(() -> {
             log.error(String.format("Task with ID %s not found", id));
             return new NotFoundException(String.format("Task with ID %s not found", id));
-        });
+        }));
     }
 
     @Override
-    public Task add(Task task) {
+    public TaskResponseDto add(TaskRequestDto newTask) {
         try {
-            return taskRepository.save(task);
+            return taskMapper.taskToTaskResponseDto(taskRepository.save(
+                    taskMapper.taskRequestDtoToTask(newTask)
+            ));
         } catch (NestedRuntimeException e) {
             log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
@@ -53,9 +63,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(Task task) {
+    public TaskResponseDto update(TaskRequestDto newTask) {
         try {
-            return taskRepository.save(task);
+            return taskMapper.taskToTaskResponseDto(taskRepository.save(
+                    taskMapper.taskRequestDtoToTask(newTask)
+            ));
         } catch (NestedRuntimeException e) {
             log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
@@ -69,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public Task assignUser(Long taskId, Long userId) {
+    public TaskResponseDto assignUser(Long taskId, Long userId) {
         try {
             int count = taskRepository.assignUser(taskId, userId);
             if (count == 0) {
@@ -85,7 +97,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public Task assignRelease(Long taskId, Long releaseId) {
+    public TaskResponseDto assignRelease(Long taskId, Long releaseId) {
         try {
             int count = taskRepository.assignRelease(taskId, releaseId);
             if (count == 0) {
@@ -101,7 +113,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public Task complete(Long id) {
+    public TaskResponseDto complete(Long id) {
         int count = taskRepository.complete(id);
         if (count == 0) {
             log.error(String.format("Task with ID %s not found", id));
@@ -111,8 +123,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional(readOnly = true)
-    public List<Task> filterTask(TaskFilterDTO taskFilter) {
+    public List<TaskResponseDto> filterTask(TaskFilterDTO taskFilter) {
         TaskSpecification specification = new TaskSpecification(taskFilter);
-        return taskRepository.findAll(specification);
+        return taskRepository.findAll(specification).stream()
+                .map(taskMapper::taskToTaskResponseDto)
+                .collect(Collectors.toList());
     }
 }

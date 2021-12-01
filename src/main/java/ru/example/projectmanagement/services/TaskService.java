@@ -1,6 +1,8 @@
 package ru.example.projectmanagement.services;
 
 import ru.example.projectmanagement.dto.TaskFilterDTO;
+import ru.example.projectmanagement.dto.TaskRequestDto;
+import ru.example.projectmanagement.dto.TaskResponseDto;
 import ru.example.projectmanagement.entities.Task;
 
 import java.util.List;
@@ -13,33 +15,33 @@ public interface TaskService {
     /**
      * Get all tasks.
      *
-     * @return list of tasks
+     * @return list of TaskResponseDto
      */
-    List<Task> getAll();
+    List<TaskResponseDto> getAll();
 
     /**
      * Get specific tasks.
      *
      * @param id - identifier of task
-     * @return task entity
+     * @return TaskResponseDto
      */
-    Task getById(Long id);
+    TaskResponseDto getById(Long id);
 
     /**
      * Add task.
      *
-     * @param task - task entity
-     * @return task entity
+     * @param newTask - TaskRequestDto
+     * @return TaskResponseDto
      */
-    Task add(Task task);
+    TaskResponseDto add(TaskRequestDto newTask);
 
     /**
      * Update task.
      *
-     * @param task - task entity
-     * @return task entity
+     * @param newTask - TaskRequestDto
+     * @return TaskResponseDto
      */
-    Task update(Task task);
+    TaskResponseDto update(TaskRequestDto newTask);
 
     /**
      * Delete specific task.
@@ -53,32 +55,32 @@ public interface TaskService {
      *
      * @param taskId - identifier of task
      * @param userId - identifier of user
-     * @return task entity
+     * @return TaskResponseDto
      */
-    Task assignUser(Long taskId, Long userId);
+    TaskResponseDto assignUser(Long taskId, Long userId);
 
     /**
      * Assign the release to the task.
      *
      * @param taskId    - identifier of task
      * @param releaseId - identifier of release
-     * @return task entity
+     * @return TaskResponseDto
      */
-    Task assignRelease(Long taskId, Long releaseId);
+    TaskResponseDto assignRelease(Long taskId, Long releaseId);
 
     /**
      * Complete specific task.
      *
      * @param id - identifier of task
-     * @return task entity
+     * @return TaskResponseDto
      */
-    Task complete(Long id);
+    TaskResponseDto complete(Long id);
 
     /**
      * Filter tasks.
      *
      * @param taskFilter - specific filter
-     * @return list of tasks
+     * @return list of TaskResponseDto
      */
-    List<Task> filterTask(TaskFilterDTO taskFilter);
+    List<TaskResponseDto> filterTask(TaskFilterDTO taskFilter);
 }

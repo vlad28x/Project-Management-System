@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class TaskController {
 
     private final TaskService taskService;
-    private final TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -33,36 +32,28 @@ public class TaskController {
     @Operation(summary = "Получение всех задач", description = "Позволяет получить все задачи")
     @GetMapping
     public ResponseEntity<List<TaskResponseDto>> getAllTasks() {
-        List<TaskResponseDto> list = taskService.getAll().stream()
-                .map(taskMapper::taskToTaskResponseDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(taskService.getAll());
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Получение одной задачи", description = "Позволяет получить одну задачу по заданному ID")
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDto> getTaskById(@PathVariable Long id) {
-        Task task = taskService.getById(id);
-        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+        return ResponseEntity.ok(taskService.getById(id));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Добавление задачи", description = "Позволяет добавить задачу")
     @PostMapping
     public ResponseEntity<TaskResponseDto> createTask(@RequestBody TaskRequestDto newTask) {
-        Task task = taskMapper.taskRequestDtoToTask(newTask);
-        task = taskService.add(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskMapper.taskToTaskResponseDto(task));
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.add(newTask));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Обновление задачи", description = "Позволяет обновить задачу по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponseDto> updateTask(@PathVariable Long id, @RequestBody TaskRequestDto newTask) {
-        Task task = taskMapper.taskRequestDtoToTask(newTask);
-        task = taskService.add(task);
-        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+        return ResponseEntity.ok(taskService.update(newTask));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
@@ -77,8 +68,7 @@ public class TaskController {
             description = "Позволяет назначить исполнителя по заданному ID для задачи по заданному ID")
     @PutMapping("{taskId}/assign/user/{userId}")
     public ResponseEntity<TaskResponseDto> assignUser(@PathVariable Long taskId, @PathVariable Long userId) {
-        Task task = taskService.assignUser(taskId, userId);
-        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+        return ResponseEntity.ok(taskService.assignUser(taskId, userId));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
@@ -86,25 +76,20 @@ public class TaskController {
             description = "Позволяет назначить релиз по заданному ID для задачи по заданному ID")
     @PutMapping("{taskId}/assign/release/{releaseId}")
     public ResponseEntity<TaskResponseDto> assignRelease(@PathVariable Long taskId, @PathVariable Long releaseId) {
-        Task task = taskService.assignRelease(taskId, releaseId);
-        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+        return ResponseEntity.ok(taskService.assignRelease(taskId, releaseId));
     }
 
     @PreAuthorize("hasRole('PROGRAMMER')")
     @Operation(summary = "Завершение задачи", description = "Позволяет завершить задачу по заданному ID")
     @PutMapping("{id}/complete")
     public ResponseEntity<TaskResponseDto> completeTask(@PathVariable Long id) {
-        Task task = taskService.complete(id);
-        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+        return ResponseEntity.ok(taskService.complete(id));
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Фильтрация задач", description = "Позволяет фильтровать задачи по строковым типам и перечислениям")
     @GetMapping("/filter")
     public ResponseEntity<List<TaskResponseDto>> filterTasks(@RequestBody TaskFilterDTO taskFilter) {
-        List<TaskResponseDto> list = taskService.filterTask(taskFilter).stream()
-                .map(taskMapper::taskToTaskResponseDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(taskService.filterTask(taskFilter));
     }
 }

@@ -53,7 +53,7 @@ public class JwtTokenProvider {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return claimsJws.getBody().getExpiration().after(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticationException("JWT token is expired or invalid");
+            throw new JwtAuthenticationException("JWT token is expired or invalid. " + e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request) {
         String token = request.getHeader(authorizationHeader);
-        if (token.startsWith("Bearer ")) {
+        if (token != null && token.startsWith("Bearer ")) {
             return token.substring(7);
         }
         return null;

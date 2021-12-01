@@ -1,10 +1,13 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.example.projectmanagement.dto.ProjectRequestDto;
+import ru.example.projectmanagement.dto.ProjectResponseDto;
 import ru.example.projectmanagement.entities.Project;
 import ru.example.projectmanagement.entities.enums.Status;
 import ru.example.projectmanagement.exceptions.BadRequestException;
@@ -12,13 +15,16 @@ import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.ProjectRepository;
 import ru.example.projectmanagement.repositories.TaskRepository;
 import ru.example.projectmanagement.services.ProjectService;
+import ru.example.projectmanagement.utils.mappers.ProjectMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectServiceImpl.class);
+    private static final ProjectMapper projectMapper = Mappers.getMapper(ProjectMapper.class);
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
@@ -30,23 +36,27 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Project> getAll() {
-        return projectRepository.findAll();
+    public List<ProjectResponseDto> getAll() {
+        return projectRepository.findAll().stream()
+                .map(projectMapper::projectToProjectResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Project getById(Long id) {
-        return projectRepository.findById(id).orElseThrow(() -> {
+    public ProjectResponseDto getById(Long id) {
+        return projectMapper.projectToProjectResponseDto(projectRepository.findById(id).orElseThrow(() -> {
             log.error(String.format("Project with ID %s not found", id));
             return new NotFoundException(String.format("Project with ID %s not found", id));
-        });
+        }));
     }
 
     @Override
-    public Project add(Project project) {
+    public ProjectResponseDto add(ProjectRequestDto newProject) {
         try {
-            return projectRepository.save(project);
+            return projectMapper.projectToProjectResponseDto(projectRepository.save(
+                    projectMapper.projectRequestDtoToProject(newProject))
+            );
         } catch (NestedRuntimeException e) {
             log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
@@ -54,9 +64,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project update(Project project) {
+    public ProjectResponseDto update(ProjectRequestDto newProject) {
         try {
-            return projectRepository.save(project);
+            return projectMapper.projectToProjectResponseDto(projectRepository.save(
+                    projectMapper.projectRequestDtoToProject(newProject))
+            );
         } catch (NestedRuntimeException e) {
             log.error(e.getMessage(), e.getCause());
             throw new BadRequestException(e.getMessage());
@@ -70,8 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Transactional
     @Override
-    public Project complete(Long id) {
-        // Количество невыполненных задач в проекте
+    public ProjectResponseDto complete(Long id) {
         Long countUnderdoneTasks = taskRepository.countByProjectIdAndStatusNot(id, Status.DONE);
         if (countUnderdoneTasks == 0) {
             projectRepository.complete(id);

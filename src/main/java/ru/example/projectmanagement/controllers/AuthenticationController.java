@@ -15,6 +15,7 @@ import ru.example.projectmanagement.exceptions.InvalidUserDataException;
 import ru.example.projectmanagement.exceptions.NotFoundException;
 import ru.example.projectmanagement.repositories.UserRepository;
 import ru.example.projectmanagement.security.JwtTokenProvider;
+import ru.example.projectmanagement.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,27 +27,27 @@ import java.util.Map;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository userRepository, JwtTokenProvider jwtTokenProvider) {
+    public AuthenticationController(AuthenticationManager authenticationManager, UserService userService, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<Object, Object>> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<Map<String, String>> authenticate(@RequestBody AuthenticationRequestDTO request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("User doesn't exists"));
+            User user = userService.findByUsername(request.getUsername());
             String token = jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
-            Map<Object, Object> response = new HashMap<>();
+            Map<String, String> response = new HashMap<>();
             response.put("username", request.getUsername());
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new InvalidUserDataException("Invalid email/password combination");
+            throw new InvalidUserDataException("Invalid email/password combination. " + e.getMessage());
         }
     }
 

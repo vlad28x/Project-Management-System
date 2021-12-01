@@ -1,5 +1,7 @@
 package ru.example.projectmanagement.services;
 
+import ru.example.projectmanagement.dto.ProjectRequestDto;
+import ru.example.projectmanagement.dto.ProjectResponseDto;
 import ru.example.projectmanagement.entities.Project;
 
 import java.util.List;
@@ -12,33 +14,33 @@ public interface ProjectService {
     /**
      * Get all projects.
      *
-     * @return list of projects
+     * @return list of ProjectResponseDto
      */
-    List<Project> getAll();
+    List<ProjectResponseDto> getAll();
 
     /**
      * Get specific project.
      *
      * @param id - identifier of project
-     * @return project entity
+     * @return ProjectResponseDto
      */
-    Project getById(Long id);
+    ProjectResponseDto getById(Long id);
 
     /**
      * Add project.
      *
-     * @param project - project entity
-     * @return project entity
+     * @param newProject - ProjectRequestDto
+     * @return ProjectResponseDto
      */
-    Project add(Project project);
+    ProjectResponseDto add(ProjectRequestDto newProject);
 
     /**
      * Update project.
      *
-     * @param project - project entity
-     * @return project entity
+     * @param newProject - ProjectRequestDto
+     * @return ProjectResponseDto
      */
-    Project update(Project project);
+    ProjectResponseDto update(ProjectRequestDto newProject);
 
     /**
      * Delete specific project.
@@ -51,7 +53,7 @@ public interface ProjectService {
      * Complete specific project.
      *
      * @param id - identifier of project
-     * @return project entity
+     * @return ProjectResponseDto
      */
-    Project complete(Long id);
+    ProjectResponseDto complete(Long id);
 }
