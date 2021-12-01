@@ -5,7 +5,7 @@ import ru.example.paymentservice.entities.enums.Operation;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "history_account")
+@Table(name = "account_history")
 public class AccountHistory extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
