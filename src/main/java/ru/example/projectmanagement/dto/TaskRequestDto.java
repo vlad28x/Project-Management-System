@@ -5,6 +5,7 @@ import ru.example.projectmanagement.entities.enums.Status;
 import ru.example.projectmanagement.entities.enums.Type;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Schema(description = "Сущность задачи для запроса")
 public class TaskRequestDto {
@@ -14,6 +15,10 @@ public class TaskRequestDto {
     private String name;
     @Schema(description = "Описание")
     private String description;
+    @Schema(description = "Время создания")
+    private LocalDateTime createdAt;
+    @Schema(description = "Время обновления")
+    private LocalDateTime updatedAt;
     @Schema(description = "Статус")
     private Status status;
     @Schema(description = "Тип")
@@ -22,14 +27,14 @@ public class TaskRequestDto {
     private LocalDate startDate;
     @Schema(description = "Дата завершения задачи")
     private LocalDate endDate;
-    @Schema(description = "Релиз")
-    private Long releaseId;
+    @Schema(description = "Назначенный на выполнение задачи")
+    private Long assignerId;
     @Schema(description = "Создатель задачи")
     private Long ownerId;
-    @Schema(description = "Назначенный на выполнение задачи")
-    private Long assigneeId;
     @Schema(description = "Проект")
     private Long projectId;
+    @Schema(description = "Релиз")
+    private Long releaseId;
 
     public Long getId() {
         return id;
@@ -103,12 +108,12 @@ public class TaskRequestDto {
         this.ownerId = ownerId;
     }
 
-    public Long getAssigneeId() {
-        return assigneeId;
+    public Long getAssignerId() {
+        return assignerId;
     }
 
-    public void setAssigneeId(Long assigneeId) {
-        this.assigneeId = assigneeId;
+    public void setAssignerId(Long assignerId) {
+        this.assignerId = assignerId;
     }
 
     public Long getProjectId() {
@@ -118,4 +123,21 @@ public class TaskRequestDto {
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 }

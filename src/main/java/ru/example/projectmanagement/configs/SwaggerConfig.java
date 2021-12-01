@@ -12,6 +12,6 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(
                 new Info().title("Project Management System Api").version("1.0.0").contact(
-                new Contact().name("Vladislav Skibin").email("vladskibin@bk.ru").url("https://github.com/vlad28x/")));
+                        new Contact().name("Vladislav Skibin").email("vladskibin@bk.ru").url("https://github.com/vlad28x/")));
     }
 }
