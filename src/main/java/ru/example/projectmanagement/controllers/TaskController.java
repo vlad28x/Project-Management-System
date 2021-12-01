@@ -64,4 +64,27 @@ public class TaskController {
     public void deleteTask(@PathVariable Long id) {
         taskService.delete(id);
     }
+
+    @Operation(summary = "Назначение исполнителя",
+            description = "Позволяет назначить исполнителя по заданному ID для задачи по заданному ID")
+    @PutMapping("{taskId}/assign/user/{userId}")
+    public ResponseEntity<TaskResponseDto> assignUser(@PathVariable Long taskId, @PathVariable Long userId) {
+        Task task = taskService.assignUser(taskId, userId);
+        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
+
+    @Operation(summary = "Назначение релиза",
+            description = "Позволяет назначить релиз по заданному ID для задачи по заданному ID")
+    @PutMapping("{taskId}/assign/release/{releaseId}")
+    public ResponseEntity<TaskResponseDto> assignRelease(@PathVariable Long taskId, @PathVariable Long releaseId) {
+        Task task = taskService.assignRelease(taskId, releaseId);
+        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
+
+    @Operation(summary = "Завершение задачи", description = "Позволяет завершить задачу по заданному ID")
+    @PutMapping("{id}/complete")
+    public ResponseEntity<TaskResponseDto> completeTask(@PathVariable Long id) {
+        Task task = taskService.complete(id);
+        return ResponseEntity.ok(taskMapper.taskToTaskResponseDto(task));
+    }
 }

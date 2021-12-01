@@ -15,4 +15,6 @@ public interface ReleaseService {
     Release update(Release release);
 
     void delete(Long id);
+
+    Long countUnderdoneTasks(Long id);
 }

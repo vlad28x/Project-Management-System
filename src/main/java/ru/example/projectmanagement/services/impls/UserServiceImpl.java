@@ -1,5 +1,7 @@
 package ru.example.projectmanagement.services.impls;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
 
@@ -29,7 +33,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public User getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("User with ID %s not found", id)));
+        return userRepository.findById(id).orElseThrow(() -> {
+            log.error(String.format("User with ID %s not found", id));
+            return new NotFoundException(String.format("User with ID %s not found", id));
+        });
     }
 
     @Override
@@ -37,7 +44,8 @@ public class UserServiceImpl implements UserService {
         try {
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            log.error(e.getMessage(), e.getCause());
+            throw new BadRequestException(e.getMessage());
         }
     }
 
@@ -46,7 +54,8 @@ public class UserServiceImpl implements UserService {
         try {
             return userRepository.save(user);
         } catch (NestedRuntimeException e) {
-            throw new BadRequestException("Bad request");
+            log.error(e.getMessage(), e.getCause());
+            throw new BadRequestException(e.getMessage());
         }
     }
 

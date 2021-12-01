@@ -15,4 +15,10 @@ public interface TaskService {
     Task update(Task task);
 
     void delete(Long id);
+
+    Task assignUser(Long taskId, Long userId);
+
+    Task assignRelease(Long taskId, Long releaseId);
+
+    Task complete(Long id);
 }

@@ -65,4 +65,11 @@ public class ProjectController {
     public void deleteProject(@PathVariable Long id) {
         projectService.delete(id);
     }
+
+    @Operation(summary = "Завершение проекта", description = "Позволяет завершить проект по заданному ID")
+    @PutMapping("{id}/complete")
+    public ResponseEntity<ProjectResponseDto> completeProject(@PathVariable Long id) {
+        Project project = projectService.complete(id);
+        return ResponseEntity.ok(projectMapper.projectToProjectResponseDto(project));
+    }
 }
