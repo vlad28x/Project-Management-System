@@ -51,6 +51,7 @@ public interface UserService {
 
     /**
      * Find User by username
+     *
      * @param username - username of User
      * @return User entity
      */

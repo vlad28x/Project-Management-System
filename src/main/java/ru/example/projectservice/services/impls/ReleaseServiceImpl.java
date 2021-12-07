@@ -61,14 +61,24 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public ReleaseResponseDto update(ReleaseRequestDto newRelease) {
-        try {
-            return releaseMapper.releaseToReleaseResponseDto(releaseRepository.save(
-                    releaseMapper.releaseRequestDtoToRelease(newRelease)
-            ));
-        } catch (NestedRuntimeException e) {
-            log.error(e.getMessage(), e.getCause());
-            throw new BadRequestException(e.getMessage());
+        if (newRelease == null || newRelease.getId() == null) {
+            log.error("Release or ID must not be null!");
+            throw new BadRequestException("Release or ID must not be null!");
         }
+        if (releaseRepository.findById(newRelease.getId()).isPresent()) {
+            try {
+                return releaseMapper.releaseToReleaseResponseDto(releaseRepository.save(
+                        releaseMapper.releaseRequestDtoToRelease(newRelease)
+                ));
+            } catch (NestedRuntimeException e) {
+                log.error(e.getMessage(), e.getCause());
+                throw new BadRequestException(e.getMessage());
+            }
+        } else {
+            log.error(String.format("Release with ID %s not found", newRelease.getId()));
+            throw new NotFoundException(String.format("Release with ID %s not found", newRelease.getId()));
+        }
+
     }
 
     @Override

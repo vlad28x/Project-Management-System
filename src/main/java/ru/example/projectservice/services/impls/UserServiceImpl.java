@@ -59,12 +59,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto update(UserRequestDto newUser) {
-        try {
-            return userMapper.userToUserResponseDto(userRepository.save(userMapper.userRequestDtoToUser(newUser)));
-        } catch (NestedRuntimeException e) {
-            log.error(e.getMessage(), e.getCause());
-            throw new BadRequestException(e.getMessage());
+        if (newUser == null || newUser.getId() == null) {
+            log.error("User or ID must not be null!");
+            throw new BadRequestException("User or ID must not be null!");
         }
+        if (userRepository.findById(newUser.getId()).isPresent()) {
+            try {
+                return userMapper.userToUserResponseDto(userRepository.save(userMapper.userRequestDtoToUser(newUser)));
+            } catch (NestedRuntimeException e) {
+                log.error(e.getMessage(), e.getCause());
+                throw new BadRequestException(e.getMessage());
+            }
+        } else {
+            log.error(String.format("User with ID %s not found", newUser.getId()));
+            throw new NotFoundException(String.format("User with ID %s not found", newUser.getId()));
+        }
+
     }
 
     @Override

@@ -63,13 +63,22 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskResponseDto update(TaskRequestDto newTask) {
-        try {
-            return taskMapper.taskToTaskResponseDto(taskRepository.save(
-                    taskMapper.taskRequestDtoToTask(newTask)
-            ));
-        } catch (NestedRuntimeException e) {
-            log.error(e.getMessage(), e.getCause());
-            throw new BadRequestException(e.getMessage());
+        if (newTask == null || newTask.getId() == null) {
+            log.error("Task or ID must not be null!");
+            throw new BadRequestException("Task or ID must not be null!");
+        }
+        if (taskRepository.findById(newTask.getId()).isPresent()) {
+            try {
+                return taskMapper.taskToTaskResponseDto(taskRepository.save(
+                        taskMapper.taskRequestDtoToTask(newTask)
+                ));
+            } catch (NestedRuntimeException e) {
+                log.error(e.getMessage(), e.getCause());
+                throw new BadRequestException(e.getMessage());
+            }
+        } else {
+            log.error(String.format("Task with ID %s not found", newTask.getId()));
+            throw new NotFoundException(String.format("Task with ID %s not found", newTask.getId()));
         }
     }
 

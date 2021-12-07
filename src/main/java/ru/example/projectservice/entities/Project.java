@@ -1,7 +1,6 @@
 package ru.example.projectservice.entities;
 
 import ru.example.projectservice.entities.enums.ProjectStatus;
-import ru.example.projectservice.entities.enums.TaskStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;

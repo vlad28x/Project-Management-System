@@ -2,7 +2,6 @@ package ru.example.projectservice.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import ru.example.projectservice.entities.enums.ProjectStatus;
-import ru.example.projectservice.entities.enums.TaskStatus;
 
 import java.time.LocalDate;
 

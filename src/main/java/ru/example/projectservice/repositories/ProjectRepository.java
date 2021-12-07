@@ -24,6 +24,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     /**
      * Find project by username of customer
+     *
      * @param username - username of customer
      * @return project entity
      */

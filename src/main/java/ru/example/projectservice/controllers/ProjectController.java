@@ -5,8 +5,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import ru.example.projectservice.dto.ProjectRequestDto;
 import ru.example.projectservice.dto.ProjectResponseDto;
@@ -26,7 +24,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Получение всех проектов", description = "Позволяет получить все проекты")
     @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getAllProjects() {
