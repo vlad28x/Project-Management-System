@@ -50,6 +50,8 @@ public class UserController {
     @Operation(summary = "Обновление пользователя", description = "Позволяет обновить пользователя по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto newUser) {
+        userService.getById(id);
+        newUser.setId(id);
         return ResponseEntity.ok(userService.update(newUser));
     }
 

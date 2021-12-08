@@ -1,0 +1,1 @@
+drop table if exists task, release, project, users cascade;

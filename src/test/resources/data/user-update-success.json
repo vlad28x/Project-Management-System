@@ -1,0 +1,10 @@
+{
+  "id": 3,
+  "username": "manager2",
+  "password": "manager2",
+  "firstName": "Александра",
+  "secondName": "Ястребова",
+  "email": "alexass@gmail.com",
+  "role": "MANAGER",
+  "projectId": null
+}

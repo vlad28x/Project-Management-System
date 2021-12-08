@@ -49,6 +49,8 @@ public class TaskController {
     @Operation(summary = "Обновление задачи", description = "Позволяет обновить задачу по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponseDto> updateTask(@PathVariable Long id, @RequestBody TaskRequestDto newTask) {
+        taskService.getById(id);
+        newTask.setId(id);
         return ResponseEntity.ok(taskService.update(newTask));
     }
 

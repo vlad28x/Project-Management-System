@@ -49,6 +49,8 @@ public class ProjectController {
     @Operation(summary = "Обновление проекта", description = "Позволяет обновить проект по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto newProject) {
+        projectService.getById(id);
+        newProject.setId(id);
         return ResponseEntity.ok(projectService.update(newProject));
 
     }

@@ -49,6 +49,8 @@ public class ReleaseController {
     @Operation(summary = "Обновление релиза", description = "Позволяет обновить релиз по заданному ID")
     @PutMapping("/{id}")
     public ResponseEntity<ReleaseResponseDto> updateRelease(@PathVariable Long id, @RequestBody ReleaseRequestDto newRelease) {
+        releaseService.getById(id);
+        newRelease.setId(id);
         return ResponseEntity.ok(releaseService.update(newRelease));
     }
 

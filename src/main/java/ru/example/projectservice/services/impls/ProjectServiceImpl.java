@@ -94,6 +94,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void delete(Long id) {
+        getById(id);
         projectRepository.deleteById(id);
     }
 

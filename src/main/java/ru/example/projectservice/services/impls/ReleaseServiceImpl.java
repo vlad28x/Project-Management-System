@@ -83,6 +83,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 
     @Override
     public void delete(Long id) {
+        getById(id);
         releaseRepository.deleteById(id);
     }
 
