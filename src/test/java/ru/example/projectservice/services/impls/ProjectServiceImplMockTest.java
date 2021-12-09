@@ -61,7 +61,7 @@ class ProjectServiceImplMockTest {
     }
 
     @Test
-    void getProjectByIdTest() {
+    void getProjectByIdSuccessTest() {
         User owner = new User();
         owner.setId(2L);
         User customer = new User();
@@ -82,15 +82,7 @@ class ProjectServiceImplMockTest {
         ProjectResponseDto actual = projectService.getById(1L);
         ProjectResponseDto expected = projectMapper.projectToProjectResponseDto(project);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStartDate(), actual.getStartDate());
-        assertEquals(expected.getEndDate(), actual.getEndDate());
-        assertEquals(expected.getDebt(), actual.getDebt());
-        assertEquals(expected.getStatus(), actual.getStatus());
-        assertEquals(expected.getOwnerId(), actual.getOwnerId());
-        assertEquals(expected.getCustomerId(), actual.getCustomerId());
+        assertEqualsProjectResponseDto(expected, actual);
     }
 
     @Test
@@ -100,7 +92,7 @@ class ProjectServiceImplMockTest {
     }
 
     @Test
-    void addProjectTest() {
+    void addProjectSuccessTest() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto();
         projectRequestDto.setId(1L);
         projectRequestDto.setName("Система управления проектами");
@@ -118,15 +110,7 @@ class ProjectServiceImplMockTest {
         ProjectResponseDto actual = projectService.add(projectRequestDto);
         ProjectResponseDto expected = projectMapper.projectToProjectResponseDto(project);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStartDate(), actual.getStartDate());
-        assertEquals(expected.getEndDate(), actual.getEndDate());
-        assertEquals(expected.getDebt(), actual.getDebt());
-        assertEquals(expected.getStatus(), actual.getStatus());
-        assertEquals(expected.getOwnerId(), actual.getOwnerId());
-        assertEquals(expected.getCustomerId(), actual.getCustomerId());
+        assertEqualsProjectResponseDto(expected, actual);
     }
 
     @Test
@@ -137,13 +121,7 @@ class ProjectServiceImplMockTest {
     }
 
     @Test
-    void addProjectNullTest() {
-        Mockito.when(projectRepository.save(Mockito.isNull())).thenThrow(BadRequestException.class);
-        assertThrows(BadRequestException.class, () -> projectService.add(null));
-    }
-
-    @Test
-    void updateProjectTest() {
+    void updateProjectSuccessTest() {
         ProjectRequestDto projectRequestDto = new ProjectRequestDto();
         projectRequestDto.setId(1L);
         projectRequestDto.setName("Система управления проектами");
@@ -162,15 +140,7 @@ class ProjectServiceImplMockTest {
         ProjectResponseDto actual = projectService.update(projectRequestDto);
         ProjectResponseDto expected = projectMapper.projectToProjectResponseDto(project);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStartDate(), actual.getStartDate());
-        assertEquals(expected.getEndDate(), actual.getEndDate());
-        assertEquals(expected.getDebt(), actual.getDebt());
-        assertEquals(expected.getStatus(), actual.getStatus());
-        assertEquals(expected.getOwnerId(), actual.getOwnerId());
-        assertEquals(expected.getCustomerId(), actual.getCustomerId());
+        assertEqualsProjectResponseDto(expected, actual);
     }
 
     @Test
@@ -182,9 +152,19 @@ class ProjectServiceImplMockTest {
     }
 
     @Test
-    void deleteProjectTest() {
+    void deleteProjectSuccessTest() {
+        Mockito.when(projectRepository.findById(1L)).thenReturn(Optional.of(new Project()));
         projectService.delete(1L);
         Mockito.verify(projectRepository, Mockito.times(1)).deleteById(Mockito.any(Long.class));
+    }
+
+
+    @Test
+    void deleteProjectFailTest() {
+        Mockito.when(projectRepository.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> projectService.delete(1L));
+        Mockito.verify(projectRepository, Mockito.times(0)).deleteById(Mockito.any(Long.class));
+
     }
 
     @Test
@@ -211,6 +191,18 @@ class ProjectServiceImplMockTest {
         ProjectResponseDto actual = projectService.pay("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lcjIiLCJyb2xlIjoiQ1VTVE9NRVIiLCJpYXQiOjE2MzgzOTExMjMsImV4cCI6MTYzODQ3ODgwMH0.HzVvEZHVWnR3ITjRpYppEJJHAyXVma_Rkzx1WCHW-6g");
         Mockito.verify(projectRepository, Mockito.times(1)).save(Mockito.any(Project.class));
         assertEquals(ProjectStatus.IN_PROGRESS, actual.getStatus());
+    }
+
+    private void assertEqualsProjectResponseDto(ProjectResponseDto expected, ProjectResponseDto actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.getStartDate(), actual.getStartDate());
+        assertEquals(expected.getEndDate(), actual.getEndDate());
+        assertEquals(expected.getDebt(), actual.getDebt());
+        assertEquals(expected.getStatus(), actual.getStatus());
+        assertEquals(expected.getOwnerId(), actual.getOwnerId());
+        assertEquals(expected.getCustomerId(), actual.getCustomerId());
     }
 
 }

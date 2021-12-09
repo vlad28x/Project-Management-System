@@ -52,7 +52,7 @@ class TaskServiceImplMockTest {
     }
 
     @Test
-    void getTaskByIdTest() {
+    void getTaskByIdSuccessTest() {
         User owner = new User();
         owner.setId(2L);
         Project project = new Project();
@@ -73,18 +73,7 @@ class TaskServiceImplMockTest {
         TaskResponseDto actual = taskService.getById(1L);
         TaskResponseDto expected = taskMapper.taskToTaskResponseDto(task);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStartDate(), actual.getStartDate());
-        assertEquals(expected.getEndDate(), actual.getEndDate());
-        assertEquals(expected.getReleaseId(), actual.getReleaseId());
-        assertEquals(expected.getCreatedAt(), actual.getCreatedAt());
-        assertEquals(expected.getUpdatedAt(), actual.getUpdatedAt());
-        assertEquals(expected.getStatus(), actual.getStatus());
-        assertEquals(expected.getType(), actual.getType());
-        assertEquals(expected.getOwnerId(), actual.getOwnerId());
-        assertEquals(expected.getProjectId(), actual.getProjectId());
+        assertEqualsTaskResponseDto(expected, actual);
     }
 
     @Test
@@ -94,7 +83,7 @@ class TaskServiceImplMockTest {
     }
 
     @Test
-    void addTaskTest() {
+    void addTaskSuccessTest() {
         TaskRequestDto taskRequestDto = new TaskRequestDto();
         taskRequestDto.setId(1L);
         taskRequestDto.setName("TASK-1: Создать БД");
@@ -113,18 +102,7 @@ class TaskServiceImplMockTest {
         TaskResponseDto actual = taskService.add(taskRequestDto);
         TaskResponseDto expected = taskMapper.taskToTaskResponseDto(task);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStartDate(), actual.getStartDate());
-        assertEquals(expected.getEndDate(), actual.getEndDate());
-        assertEquals(expected.getReleaseId(), actual.getReleaseId());
-        assertEquals(expected.getCreatedAt(), actual.getCreatedAt());
-        assertEquals(expected.getUpdatedAt(), actual.getUpdatedAt());
-        assertEquals(expected.getStatus(), actual.getStatus());
-        assertEquals(expected.getType(), actual.getType());
-        assertEquals(expected.getOwnerId(), actual.getOwnerId());
-        assertEquals(expected.getProjectId(), actual.getProjectId());
+        assertEqualsTaskResponseDto(expected, actual);
     }
 
     @Test
@@ -135,13 +113,7 @@ class TaskServiceImplMockTest {
     }
 
     @Test
-    void addTaskNullTest() {
-        Mockito.when(taskRepository.save(Mockito.isNull())).thenThrow(BadRequestException.class);
-        assertThrows(BadRequestException.class, () -> taskService.add(null));
-    }
-
-    @Test
-    void updateTaskTest() {
+    void updateTaskSuccessTest() {
         TaskRequestDto taskRequestDto = new TaskRequestDto();
         taskRequestDto.setId(1L);
         taskRequestDto.setName("TASK-1: Создать БД");
@@ -161,18 +133,7 @@ class TaskServiceImplMockTest {
         TaskResponseDto actual = taskService.update(taskRequestDto);
         TaskResponseDto expected = taskMapper.taskToTaskResponseDto(task);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getStartDate(), actual.getStartDate());
-        assertEquals(expected.getEndDate(), actual.getEndDate());
-        assertEquals(expected.getReleaseId(), actual.getReleaseId());
-        assertEquals(expected.getCreatedAt(), actual.getCreatedAt());
-        assertEquals(expected.getUpdatedAt(), actual.getUpdatedAt());
-        assertEquals(expected.getStatus(), actual.getStatus());
-        assertEquals(expected.getType(), actual.getType());
-        assertEquals(expected.getOwnerId(), actual.getOwnerId());
-        assertEquals(expected.getProjectId(), actual.getProjectId());
+        assertEqualsTaskResponseDto(expected, actual);
     }
 
     @Test
@@ -184,13 +145,21 @@ class TaskServiceImplMockTest {
     }
 
     @Test
-    void deleteTaskTest() {
+    void deleteTaskSuccessTest() {
+        Mockito.when(taskRepository.findById(1L)).thenReturn(Optional.of(new Task()));
         taskService.delete(1L);
         Mockito.verify(taskRepository, Mockito.times(1)).deleteById(Mockito.any(Long.class));
     }
 
     @Test
-    void assignUserTest() {
+    void deleteTaskFailTest() {
+        Mockito.when(taskRepository.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> taskService.delete(1L));
+        Mockito.verify(taskRepository, Mockito.times(0)).deleteById(Mockito.any(Long.class));
+    }
+
+    @Test
+    void assignUserSuccessTest() {
         Long taskId = 1L;
         Long assignerId = 2L;
         Mockito.when(taskRepository.assignUser(taskId, assignerId)).thenReturn(1);
@@ -209,7 +178,7 @@ class TaskServiceImplMockTest {
     }
 
     @Test
-    void assignReleaseTest() {
+    void assignReleaseSuccessTest() {
         Long taskId = 1L;
         Long releaseId = 2L;
         Mockito.when(taskRepository.assignRelease(taskId, releaseId)).thenReturn(1);
@@ -228,7 +197,7 @@ class TaskServiceImplMockTest {
     }
 
     @Test
-    void completeTaskId() {
+    void completeTaskSuccessId() {
         Long taskId = 1L;
         Mockito.when(taskRepository.complete(taskId)).thenReturn(1);
         Mockito.when(taskRepository.findById(taskId)).thenReturn(Optional.of(new Task()));
@@ -255,4 +224,20 @@ class TaskServiceImplMockTest {
         List<TaskResponseDto> actual = taskService.filterTask(taskFilterDTO);
         assertEquals(list.size(), actual.size());
     }
+
+    private void assertEqualsTaskResponseDto(TaskResponseDto expected, TaskResponseDto actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.getStartDate(), actual.getStartDate());
+        assertEquals(expected.getEndDate(), actual.getEndDate());
+        assertEquals(expected.getReleaseId(), actual.getReleaseId());
+        assertEquals(expected.getCreatedAt(), actual.getCreatedAt());
+        assertEquals(expected.getUpdatedAt(), actual.getUpdatedAt());
+        assertEquals(expected.getStatus(), actual.getStatus());
+        assertEquals(expected.getType(), actual.getType());
+        assertEquals(expected.getOwnerId(), actual.getOwnerId());
+        assertEquals(expected.getProjectId(), actual.getProjectId());
+    }
+
 }

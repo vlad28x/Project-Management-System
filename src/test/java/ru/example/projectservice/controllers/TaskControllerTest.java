@@ -168,10 +168,10 @@ class TaskControllerTest {
 
     @Test
     void assignReleaseFailTest() throws Exception {
-        this.mockMvc.perform(put("/tasks/4/assign/release/3"))
+        this.mockMvc.perform(put("/tasks/4/assign/release/4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Referential integrity violated for release with ID 3"));
+                .andExpect(jsonPath("$.message").value("Referential integrity violated for release with ID 4"));
     }
 
     @Test

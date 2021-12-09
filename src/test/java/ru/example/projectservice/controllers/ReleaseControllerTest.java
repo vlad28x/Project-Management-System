@@ -51,10 +51,10 @@ class ReleaseControllerTest {
 
     @Test
     void getReleaseByIdFailTest() throws Exception {
-        this.mockMvc.perform(get("/releases/3"))
+        this.mockMvc.perform(get("/releases/4"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Release with ID 3 not found"));
+                .andExpect(jsonPath("$.message").value("Release with ID 4 not found"));
     }
 
     @Test
@@ -64,7 +64,7 @@ class ReleaseControllerTest {
                 .content(Files.readAllBytes(ResourceUtils.getFile("classpath:data/release-create-success.json").toPath())))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.id").value(3))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.version").value("2.0 Beta"))
                 .andExpect(jsonPath("$.description").value("Бета версия проекта"))
                 .andExpect(jsonPath("$.startDate").value("2021-12-02"))

@@ -45,7 +45,7 @@ class UserServiceImplMockTest {
     }
 
     @Test
-    void getUserByIdTest() {
+    void getUserByIdSuccessTest() {
         Project project = new Project();
         project.setId(1L);
         User user = new User();
@@ -63,13 +63,7 @@ class UserServiceImplMockTest {
         UserResponseDto actual = userService.getById(1L);
         UserResponseDto expected = userMapper.userToUserResponseDto(user);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getUsername(), actual.getUsername());
-        assertEquals(expected.getFirstName(), actual.getFirstName());
-        assertEquals(expected.getSecondName(), actual.getSecondName());
-        assertEquals(expected.getEmail(), actual.getEmail());
-        assertEquals(expected.getRole(), actual.getRole());
-        assertEquals(expected.getProjectId(), actual.getProjectId());
+        assertEqualsUserResponseDto(expected, actual);
     }
 
     @Test
@@ -79,7 +73,7 @@ class UserServiceImplMockTest {
     }
 
     @Test
-    void addUserTest() {
+    void addUserSuccessTest() {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setId(1L);
         userRequestDto.setUsername("vlad28x");
@@ -96,13 +90,7 @@ class UserServiceImplMockTest {
         UserResponseDto actual = userService.add(userRequestDto);
         UserResponseDto expected = userMapper.userToUserResponseDto(user);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getUsername(), actual.getUsername());
-        assertEquals(expected.getFirstName(), actual.getFirstName());
-        assertEquals(expected.getSecondName(), actual.getSecondName());
-        assertEquals(expected.getEmail(), actual.getEmail());
-        assertEquals(expected.getRole(), actual.getRole());
-        assertEquals(expected.getProjectId(), actual.getProjectId());
+        assertEqualsUserResponseDto(expected, actual);
     }
 
     @Test
@@ -113,13 +101,7 @@ class UserServiceImplMockTest {
     }
 
     @Test
-    void addUserNullTest() {
-        Mockito.when(userRepository.save(Mockito.isNull())).thenThrow(BadRequestException.class);
-        assertThrows(BadRequestException.class, () -> userService.add(null));
-    }
-
-    @Test
-    void updateUserTest() {
+    void updateUserSuccessTest() {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setId(1L);
         userRequestDto.setUsername("vlad28x");
@@ -137,13 +119,7 @@ class UserServiceImplMockTest {
         UserResponseDto actual = userService.update(userRequestDto);
         UserResponseDto expected = userMapper.userToUserResponseDto(user);
 
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getUsername(), actual.getUsername());
-        assertEquals(expected.getFirstName(), actual.getFirstName());
-        assertEquals(expected.getSecondName(), actual.getSecondName());
-        assertEquals(expected.getEmail(), actual.getEmail());
-        assertEquals(expected.getRole(), actual.getRole());
-        assertEquals(expected.getProjectId(), actual.getProjectId());
+        assertEqualsUserResponseDto(expected, actual);
     }
 
     @Test
@@ -155,13 +131,21 @@ class UserServiceImplMockTest {
     }
 
     @Test
-    void deleteUserTest() {
+    void deleteUserSuccessTest() {
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new User()));
         userService.delete(1L);
         Mockito.verify(userRepository, Mockito.times(1)).deleteById(Mockito.any(Long.class));
     }
 
     @Test
-    void findByUsernameTest() {
+    void deleteUserFailTest() {
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> userService.delete(1L));
+        Mockito.verify(userRepository, Mockito.times(0)).deleteById(Mockito.any(Long.class));
+    }
+
+    @Test
+    void findByUsernameSuccessTest() {
         String username = "vlad28x";
         Project project = new Project();
         User expected = new User();
@@ -193,4 +177,15 @@ class UserServiceImplMockTest {
         Mockito.when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> userService.findByUsername(username));
     }
+
+    private void assertEqualsUserResponseDto(UserResponseDto expected, UserResponseDto actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getUsername(), actual.getUsername());
+        assertEquals(expected.getFirstName(), actual.getFirstName());
+        assertEquals(expected.getSecondName(), actual.getSecondName());
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getRole(), actual.getRole());
+        assertEquals(expected.getProjectId(), actual.getProjectId());
+    }
+
 }

@@ -43,7 +43,7 @@ class ProjectControllerTest {
         this.mockMvc.perform(get("/projects"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 
     @Test
@@ -64,10 +64,10 @@ class ProjectControllerTest {
 
     @Test
     void getProjectByIdFailTest() throws Exception {
-        this.mockMvc.perform(get("/projects/3"))
+        this.mockMvc.perform(get("/projects/4"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Project with ID 3 not found"));
+                .andExpect(jsonPath("$.message").value("Project with ID 4 not found"));
     }
 
     @Test
@@ -77,7 +77,7 @@ class ProjectControllerTest {
                 .content(Files.readAllBytes(ResourceUtils.getFile("classpath:data/project-create-success.json").toPath())))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.id").value(3))
+                .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.name").value("Система управления проектами"))
                 .andExpect(jsonPath("$.description").value("Проект написан с использование Spring Boot"))
                 .andExpect(jsonPath("$.startDate").value("2021-10-25"))
