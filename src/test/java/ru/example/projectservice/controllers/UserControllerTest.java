@@ -1,7 +1,6 @@
 package ru.example.projectservice.controllers;
 
 
-import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,8 +14,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.nio.file.Files;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,7 +73,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.secondName").value("Скибин"))
                 .andExpect(jsonPath("$.email").value("vlad.skibin1@mail.ru"))
                 .andExpect(jsonPath("$.role").value("PROGRAMMER"))
-                .andExpect(jsonPath("$.projectId").value(IsNull.nullValue()));
+                .andExpect(jsonPath("$.projectId").value(nullValue()));
     }
 
     @Test
@@ -100,7 +98,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.secondName").value("Ястребова"))
                 .andExpect(jsonPath("$.email").value("alexass@gmail.com"))
                 .andExpect(jsonPath("$.role").value("MANAGER"))
-                .andExpect(jsonPath("$.projectId").value(IsNull.nullValue()));
+                .andExpect(jsonPath("$.projectId").value(nullValue()));
     }
 
     @Test

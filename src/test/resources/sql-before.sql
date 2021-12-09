@@ -141,6 +141,7 @@ where id = 9;
 
 insert into release(release_version, release_description, release_end_date, release_start_date)
 values ('1.0 Beta', 'Бета версия проекта', '2021-10-25', '2021-11-02'),
+       ('1.0.2 Beta', 'Бета версия проекта', '2021-09-25', '2021-10-06'),
        ('1.0.2 Beta', 'Бета версия проекта', '2021-09-25', '2021-10-06');
 
 insert into task(task_name, task_description, task_created_at, task_updated_at, task_status, task_type, task_start_date,

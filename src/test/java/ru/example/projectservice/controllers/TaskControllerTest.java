@@ -1,6 +1,5 @@
 package ru.example.projectservice.controllers;
 
-import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,8 +13,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.nio.file.Files;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,12 +49,12 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$.updatedAt").value("2021-12-08T16:32:34.451569"))
                 .andExpect(jsonPath("$.status").value("BACKLOG"))
                 .andExpect(jsonPath("$.type").value("FEATURE"))
-                .andExpect(jsonPath("$.startDate").value(IsNull.nullValue()))
-                .andExpect(jsonPath("$.endDate").value(IsNull.nullValue()))
-                .andExpect(jsonPath("$.assignerId").value(IsNull.nullValue()))
+                .andExpect(jsonPath("$.startDate").value(nullValue()))
+                .andExpect(jsonPath("$.endDate").value(nullValue()))
+                .andExpect(jsonPath("$.assignerId").value(nullValue()))
                 .andExpect(jsonPath("$.ownerId").value(3))
                 .andExpect(jsonPath("$.projectId").value(2))
-                .andExpect(jsonPath("$.releaseId").value(IsNull.nullValue()));
+                .andExpect(jsonPath("$.releaseId").value(nullValue()));
     }
 
     @Test
@@ -69,7 +67,7 @@ class TaskControllerTest {
 
     @Test
     void createTaskSuccessTest() throws Exception {
-        this.mockMvc.perform(post("/tasks/")
+        this.mockMvc.perform(post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Files.readAllBytes(ResourceUtils.getFile("classpath:data/task-create-success.json").toPath())))
                 .andExpect(status().isCreated())
@@ -82,7 +80,7 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$.status").value("IN_PROGRESS"))
                 .andExpect(jsonPath("$.type").value("BUG"))
                 .andExpect(jsonPath("$.startDate").value("2021-10-26"))
-                .andExpect(jsonPath("$.endDate").value(IsNull.nullValue()))
+                .andExpect(jsonPath("$.endDate").value(nullValue()))
                 .andExpect(jsonPath("$.assignerId").value(6))
                 .andExpect(jsonPath("$.ownerId").value(3))
                 .andExpect(jsonPath("$.projectId").value(2))
@@ -91,7 +89,7 @@ class TaskControllerTest {
 
     @Test
     void createTaskFailTest() throws Exception {
-        this.mockMvc.perform(post("/tasks/")
+        this.mockMvc.perform(post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Files.readAllBytes(ResourceUtils.getFile("classpath:data/task-create-fail.json").toPath())))
                 .andExpect(status().isBadRequest())
@@ -112,12 +110,12 @@ class TaskControllerTest {
                 //.andExpect(jsonPath("$.updatedAt").value("2021-12-08T16:32:34.451569"))
                 .andExpect(jsonPath("$.status").value("BACKLOG"))
                 .andExpect(jsonPath("$.type").value("FEATURE"))
-                .andExpect(jsonPath("$.startDate").value(IsNull.nullValue()))
-                .andExpect(jsonPath("$.endDate").value(IsNull.nullValue()))
-                .andExpect(jsonPath("$.assignerId").value(IsNull.nullValue()))
+                .andExpect(jsonPath("$.startDate").value(nullValue()))
+                .andExpect(jsonPath("$.endDate").value(nullValue()))
+                .andExpect(jsonPath("$.assignerId").value(nullValue()))
                 .andExpect(jsonPath("$.ownerId").value(2))
                 .andExpect(jsonPath("$.projectId").value(1))
-                .andExpect(jsonPath("$.releaseId").value(IsNull.nullValue()));
+                .andExpect(jsonPath("$.releaseId").value(nullValue()));
     }
 
     @Test
