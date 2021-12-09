@@ -24,7 +24,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Получение всех проектов", description = "Позволяет получить все проекты")
     @GetMapping
     public ResponseEntity<List<ProjectResponseDto>> getAllProjects() {
@@ -69,7 +69,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.complete(id));
     }
 
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN')")
     @PutMapping("/pay")
     public ResponseEntity<ProjectResponseDto> payDebt(@RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(projectService.pay(jwt));

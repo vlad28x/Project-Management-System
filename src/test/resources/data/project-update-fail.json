@@ -1,0 +1,9 @@
+{
+  "description": "Проект написан с использование Spring Boot",
+  "startDate": "2021-10-25",
+  "endDate": "2021-12-14",
+  "debt": 0,
+  "status": "DONE",
+  "ownerId": 2,
+  "customerId": 8
+}
