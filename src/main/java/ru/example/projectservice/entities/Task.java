@@ -1,7 +1,9 @@
 package ru.example.projectservice.entities;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.example.projectservice.entities.enums.TaskStatus;
 import ru.example.projectservice.entities.enums.Type;
 
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "task")
+@DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 public class Task extends AbstractEntity {
 
     @Column(name = "task_name")
@@ -20,7 +24,7 @@ public class Task extends AbstractEntity {
     private String description;
 
     @CreatedDate
-    @Column(name = "task_created_at")
+    @Column(name = "task_created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

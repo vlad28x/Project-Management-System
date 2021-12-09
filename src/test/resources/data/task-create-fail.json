@@ -1,0 +1,10 @@
+{
+  "name": "TASK-6: Пофиксить баг",
+  "description": "Пофиксить баг в сервисном слое",
+  "status": "IN_PROGRESS",
+  "startDate": "2021-10-26",
+  "assignerId": 6,
+  "ownerId": 3,
+  "projectId": 2,
+  "releaseId": 2
+}

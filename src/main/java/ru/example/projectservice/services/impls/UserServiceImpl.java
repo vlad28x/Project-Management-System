@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto add(UserRequestDto newUser) {
         try {
+            newUser.setId(null);
             return userMapper.userToUserResponseDto(userRepository.save(userMapper.userRequestDtoToUser(newUser)));
         } catch (NestedRuntimeException e) {
             log.error(e.getMessage(), e.getCause());

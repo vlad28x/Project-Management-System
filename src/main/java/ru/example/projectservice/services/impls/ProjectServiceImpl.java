@@ -62,6 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponseDto add(ProjectRequestDto newProject) {
         try {
+            newProject.setId(null);
             return projectMapper.projectToProjectResponseDto(projectRepository.save(
                     projectMapper.projectRequestDtoToProject(newProject))
             );

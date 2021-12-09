@@ -36,6 +36,7 @@ class UserControllerTest {
     void getAllUsersTest() throws Exception {
         this.mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$", hasSize(9)));
     }
 
@@ -121,6 +122,8 @@ class UserControllerTest {
     void deleteUserFailTest() throws Exception {
         this.mockMvc.perform(delete("/users/10"))
                 .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.message").value("User with ID 10 not found"));
     }
+
 }

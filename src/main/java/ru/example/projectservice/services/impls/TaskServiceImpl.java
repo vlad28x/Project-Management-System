@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.example.projectservice.dto.TaskFilterDTO;
 import ru.example.projectservice.dto.TaskRequestDto;
 import ru.example.projectservice.dto.TaskResponseDto;
+import ru.example.projectservice.entities.Task;
 import ru.example.projectservice.exceptions.BadRequestException;
 import ru.example.projectservice.exceptions.NotFoundException;
 import ru.example.projectservice.repositories.TaskRepository;
@@ -17,7 +18,9 @@ import ru.example.projectservice.services.TaskService;
 import ru.example.projectservice.services.specifications.TaskSpecification;
 import ru.example.projectservice.utils.mappers.TaskMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +55,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto add(TaskRequestDto newTask) {
         try {
+            newTask.setId(null);
             return taskMapper.taskToTaskResponseDto(taskRepository.save(
                     taskMapper.taskRequestDtoToTask(newTask)
             ));
@@ -67,11 +71,13 @@ public class TaskServiceImpl implements TaskService {
             log.error("Task or ID must not be null!");
             throw new BadRequestException("Task or ID must not be null!");
         }
-        if (taskRepository.findById(newTask.getId()).isPresent()) {
+        Optional<Task> optionalTask = taskRepository.findById(newTask.getId());
+        if (optionalTask.isPresent()) {
+            LocalDateTime createdAt = optionalTask.get().getCreatedAt();
             try {
-                return taskMapper.taskToTaskResponseDto(taskRepository.save(
-                        taskMapper.taskRequestDtoToTask(newTask)
-                ));
+                Task updatedTask = taskRepository.save(taskMapper.taskRequestDtoToTask(newTask));
+                updatedTask.setCreatedAt(createdAt);
+                return taskMapper.taskToTaskResponseDto(updatedTask);
             } catch (NestedRuntimeException e) {
                 log.error(e.getMessage(), e.getCause());
                 throw new BadRequestException(e.getMessage());

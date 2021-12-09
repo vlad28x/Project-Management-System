@@ -50,6 +50,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     @Override
     public ReleaseResponseDto add(ReleaseRequestDto newRelease) {
         try {
+            newRelease.setId(null);
             return releaseMapper.releaseToReleaseResponseDto(releaseRepository.save(
                     releaseMapper.releaseRequestDtoToRelease(newRelease)
             ));

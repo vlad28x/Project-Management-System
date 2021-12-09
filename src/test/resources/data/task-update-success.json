@@ -1,0 +1,8 @@
+{
+  "name": "TASK-1: Создать БД",
+  "description": "Создать базу данных в СУБД Microsoft SQL Server",
+  "status": "BACKLOG",
+  "type": "FEATURE",
+  "ownerId": 2,
+  "projectId": 1
+}
