@@ -54,7 +54,7 @@ class ReleaseControllerTest {
         this.mockMvc.perform(get("/releases/4"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Release with ID 4 not found"));
+                .andExpect(jsonPath("$.message").value("Релиз с ID 4 не найден"));
     }
 
     @Test
@@ -114,7 +114,7 @@ class ReleaseControllerTest {
         this.mockMvc.perform(delete("/releases/4"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Release with ID 4 not found"));
+                .andExpect(jsonPath("$.message").value("Релиз с ID 4 не найден"));
     }
 
     @Test

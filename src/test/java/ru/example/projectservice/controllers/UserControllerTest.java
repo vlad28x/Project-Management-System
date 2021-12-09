@@ -57,7 +57,7 @@ class UserControllerTest {
         this.mockMvc.perform(get("/users/10"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("User with ID 10 not found"));
+                .andExpect(jsonPath("$.message").value("Пользователь с ID 10 не найден"));
     }
 
     @Test
@@ -121,7 +121,7 @@ class UserControllerTest {
         this.mockMvc.perform(delete("/users/10"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("User with ID 10 not found"));
+                .andExpect(jsonPath("$.message").value("Пользователь с ID 10 не найден"));
     }
 
 }

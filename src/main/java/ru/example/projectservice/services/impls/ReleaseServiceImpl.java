@@ -16,6 +16,7 @@ import ru.example.projectservice.services.ReleaseService;
 import ru.example.projectservice.utils.mappers.ReleaseMapper;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +44,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     public ReleaseResponseDto getById(Long id) {
         return releaseMapper.releaseToReleaseResponseDto(releaseRepository.findById(id).orElseThrow(() -> {
             log.error(String.format("Release with ID %s not found", id));
-            return new NotFoundException(String.format("Release with ID %s not found", id));
+            return new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.releaseNotFound"), id));
         }));
     }
 
@@ -64,7 +65,7 @@ public class ReleaseServiceImpl implements ReleaseService {
     public ReleaseResponseDto update(ReleaseRequestDto newRelease) {
         if (newRelease == null || newRelease.getId() == null) {
             log.error("Release or ID must not be null!");
-            throw new BadRequestException("Release or ID must not be null!");
+            throw new BadRequestException(ResourceBundle.getBundle("messages").getString("exception.releaseOrReleaseIdNull"));
         }
         if (releaseRepository.findById(newRelease.getId()).isPresent()) {
             try {
@@ -77,7 +78,7 @@ public class ReleaseServiceImpl implements ReleaseService {
             }
         } else {
             log.error(String.format("Release with ID %s not found", newRelease.getId()));
-            throw new NotFoundException(String.format("Release with ID %s not found", newRelease.getId()));
+            throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.releaseNotFound"), newRelease.getId()));
         }
 
     }

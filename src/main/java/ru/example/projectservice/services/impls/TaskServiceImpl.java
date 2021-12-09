@@ -21,6 +21,7 @@ import ru.example.projectservice.utils.mappers.TaskMapper;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto getById(Long id) {
         return taskMapper.taskToTaskResponseDto(taskRepository.findById(id).orElseThrow(() -> {
             log.error(String.format("Task with ID %s not found", id));
-            return new NotFoundException(String.format("Task with ID %s not found", id));
+            return new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.taskNotFound"), id));
         }));
     }
 
@@ -69,7 +70,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto update(TaskRequestDto newTask) {
         if (newTask == null || newTask.getId() == null) {
             log.error("Task or ID must not be null!");
-            throw new BadRequestException("Task or ID must not be null!");
+            throw new BadRequestException(ResourceBundle.getBundle("messages").getString("exception.taskOrTaskIdNull"));
         }
         Optional<Task> optionalTask = taskRepository.findById(newTask.getId());
         if (optionalTask.isPresent()) {
@@ -84,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
             }
         } else {
             log.error(String.format("Task with ID %s not found", newTask.getId()));
-            throw new NotFoundException(String.format("Task with ID %s not found", newTask.getId()));
+            throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.taskNotFound"), newTask.getId()));
         }
     }
 
@@ -101,12 +102,12 @@ public class TaskServiceImpl implements TaskService {
             int count = taskRepository.assignUser(taskId, userId);
             if (count == 0) {
                 log.error(String.format("Task with ID %s not found", taskId));
-                throw new NotFoundException(String.format("Task with ID %s not found", taskId));
+                throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.taskNotFound"), taskId));
             }
             return getById(taskId);
         } catch (DataIntegrityViolationException e) {
             log.error(String.format("Referential integrity violated for user with ID %s", userId));
-            throw new BadRequestException(String.format("Referential integrity violated for user with ID %s", userId));
+            throw new BadRequestException(String.format(ResourceBundle.getBundle("messages").getString("exception.userReference"), userId));
         }
     }
 
@@ -117,12 +118,12 @@ public class TaskServiceImpl implements TaskService {
             int count = taskRepository.assignRelease(taskId, releaseId);
             if (count == 0) {
                 log.error(String.format("Task with ID %s not found", taskId));
-                throw new NotFoundException(String.format("Task with ID %s not found", taskId));
+                throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.taskNotFound"), taskId));
             }
             return getById(taskId);
         } catch (DataIntegrityViolationException e) {
             log.error(String.format("Referential integrity violated for release with ID %s", releaseId));
-            throw new BadRequestException(String.format("Referential integrity violated for release with ID %s", releaseId));
+            throw new BadRequestException(String.format(ResourceBundle.getBundle("messages").getString("exception.userReference"), releaseId));
         }
     }
 
@@ -132,7 +133,7 @@ public class TaskServiceImpl implements TaskService {
         int count = taskRepository.complete(id);
         if (count == 0) {
             log.error(String.format("Task with ID %s not found", id));
-            throw new NotFoundException(String.format("Task with ID %s not found", id));
+            throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.taskNotFound"), id));
         }
         return getById(id);
     }

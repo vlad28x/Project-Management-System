@@ -67,7 +67,7 @@ class ProjectControllerTest {
         this.mockMvc.perform(get("/projects/4"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Project with ID 4 not found"));
+                .andExpect(jsonPath("$.message").value("Проект с ID 4 не найден"));
     }
 
     @Test
@@ -135,7 +135,7 @@ class ProjectControllerTest {
         this.mockMvc.perform(delete("/projects/4"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Project with ID 4 not found"));
+                .andExpect(jsonPath("$.message").value("Проект с ID 4 не найден"));
     }
 
     @Test
@@ -152,7 +152,7 @@ class ProjectControllerTest {
         this.mockMvc.perform(put("/projects/1/complete"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Project with ID 1 has 4 underdone tasks"));
+                .andExpect(jsonPath("$.message").value("Проект с ID 1 имеет 4 невыполненных задач"));
     }
 
     @Test

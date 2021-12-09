@@ -62,7 +62,7 @@ class TaskControllerTest {
         this.mockMvc.perform(get("/tasks/11"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Task with ID 11 not found"));
+                .andExpect(jsonPath("$.message").value("Задача с ID 11 не найдена"));
     }
 
     @Test
@@ -138,7 +138,7 @@ class TaskControllerTest {
         this.mockMvc.perform(delete("/tasks/11"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Task with ID 11 not found"));
+                .andExpect(jsonPath("$.message").value("Задача с ID 11 не найдена"));
     }
 
     @Test
@@ -155,7 +155,7 @@ class TaskControllerTest {
         this.mockMvc.perform(put("/tasks/1/assign/user/10"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Referential integrity violated for user with ID 10"));
+                .andExpect(jsonPath("$.message").value("Нарушена ссылочная целостность для пользователя с ID 10"));
     }
 
     @Test
@@ -171,7 +171,7 @@ class TaskControllerTest {
         this.mockMvc.perform(put("/tasks/4/assign/release/4"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Referential integrity violated for release with ID 4"));
+                .andExpect(jsonPath("$.message").value("Нарушена ссылочная целостность для пользователя с ID 4"));
     }
 
     @Test
@@ -188,7 +188,7 @@ class TaskControllerTest {
         this.mockMvc.perform(put("/tasks/11/complete"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.message").value("Task with ID 11 not found"));
+                .andExpect(jsonPath("$.message").value("Задача с ID 11 не найдена"));
     }
 
     @Test

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 @RestController
 @RequestMapping("/auth")
@@ -45,7 +46,7 @@ public class AuthenticationController {
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new InvalidUserDataException("Invalid email/password combination. " + e.getMessage());
+            throw new InvalidUserDataException(ResourceBundle.getBundle("messages").getString("exception.invalidUser") + e.getMessage());
         }
     }
 

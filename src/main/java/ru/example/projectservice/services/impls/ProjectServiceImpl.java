@@ -22,6 +22,7 @@ import ru.example.projectservice.services.ProjectService;
 import ru.example.projectservice.utils.mappers.ProjectMapper;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +56,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto getById(Long id) {
         return projectMapper.projectToProjectResponseDto(projectRepository.findById(id).orElseThrow(() -> {
             log.error(String.format("Project with ID %s not found", id));
-            return new NotFoundException(String.format("Project with ID %s not found", id));
+            return new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.projectNotFound"), id));
         }));
     }
 
@@ -76,7 +77,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto update(ProjectRequestDto newProject) {
         if (newProject == null || newProject.getId() == null) {
             log.error("Project or ID must not be null!");
-            throw new BadRequestException("Project or ID must not be null!");
+            throw new BadRequestException(ResourceBundle.getBundle("messages").getString("exception.projectOrProjectIdNull"));
         }
         if (projectRepository.findById(newProject.getId()).isPresent()) {
             try {
@@ -89,7 +90,7 @@ public class ProjectServiceImpl implements ProjectService {
             }
         } else {
             log.error(String.format("Project with ID %s not found", newProject.getId()));
-            throw new NotFoundException(String.format("Project with ID %s not found", newProject.getId()));
+            throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.projectNotFound"), newProject.getId()));
         }
     }
 
@@ -108,7 +109,7 @@ public class ProjectServiceImpl implements ProjectService {
             return getById(id);
         }
         log.error(String.format("Project with ID %s has %s underdone tasks", id, countUnderdoneTasks));
-        throw new BadRequestException(String.format("Project with ID %s has %s underdone tasks", id, countUnderdoneTasks));
+        throw new BadRequestException(String.format(ResourceBundle.getBundle("messages").getString("exception.projectUnderdoneTasks"), id, countUnderdoneTasks));
     }
 
     @Override
@@ -119,7 +120,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         String username = jwtTokenProvider.getUsername(token);
         Project project = projectRepository.findByCustomerUsername(username);
-        if (project == null) throw new BadRequestException("Customer doesn't have a project");
+        if (project == null) throw new BadRequestException(ResourceBundle.getBundle("messages").getString("exception.projectCustomerDoesntHave"));
         DebtRequestDto debtRequest = new DebtRequestDto();
         debtRequest.setDebt(project.getDebt());
         Integer debt = paymentClient.payDebt(jwt, debtRequest).getBody().getDebt();

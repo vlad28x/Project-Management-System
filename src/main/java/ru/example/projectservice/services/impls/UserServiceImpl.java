@@ -16,6 +16,7 @@ import ru.example.projectservice.services.UserService;
 import ru.example.projectservice.utils.mappers.UserMapper;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto getById(Long id) {
         return userMapper.userToUserResponseDto(userRepository.findById(id).orElseThrow(() -> {
             log.error(String.format("User with ID %s not found", id));
-            return new NotFoundException(String.format("User with ID %s not found", id));
+            return new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.userNotFound"), id));
         }));
     }
 
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto update(UserRequestDto newUser) {
         if (newUser == null || newUser.getId() == null) {
             log.error("User or ID must not be null!");
-            throw new BadRequestException("User or ID must not be null!");
+            throw new BadRequestException(ResourceBundle.getBundle("messages").getString("exception.userOrUserIdNull"));
         }
         if (userRepository.findById(newUser.getId()).isPresent()) {
             try {
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
             }
         } else {
             log.error(String.format("User with ID %s not found", newUser.getId()));
-            throw new NotFoundException(String.format("User with ID %s not found", newUser.getId()));
+            throw new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.userNotFound"), newUser.getId()));
         }
 
     }
@@ -88,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             log.error(String.format("User with username %s not found", username));
-            return new NotFoundException(String.format("User with username %s not found", username));
+            return new NotFoundException(String.format(ResourceBundle.getBundle("messages").getString("exception.userNotFound"), username));
         });
     }
 }
