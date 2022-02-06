@@ -1,0 +1,10 @@
+{
+  "name": "Система управления проектами",
+  "description": "Проект написан с использование Spring Boot",
+  "startDate": "2021-10-25",
+  "endDate": "2021-12-15",
+  "debt": 100000,
+  "status": "PAYMENT",
+  "ownerId": 2,
+  "customerId": 8
+}
